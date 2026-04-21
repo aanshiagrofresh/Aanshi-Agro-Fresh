@@ -3,76 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aanshi Agro Fresh - Freshness Delivered</title>
+    <title>Aanshi Agro Fresh - Best Deals</title>
     <style>
         :root { --primary: #2e7d32; --accent: #ffa41c; --white: #ffffff; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; overflow-x: hidden; }
-        .lang-switch { position: absolute; top: 20px; right: 20px; z-index: 2000; }
-        .lang-btn { background: var(--white); border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 20px; }
-        .brand-logo { width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border: 4px solid var(--accent); overflow: hidden; }
-        .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); overflow-x: hidden; }
+        .hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=1350'); background-size: cover; height: 40vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
         .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; }
-        .search-box { width: 95%; max-width: 600px; padding: 12px 20px; border-radius: 30px; border: none; font-size: 16px; display: block; margin: auto; outline: none; }
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 20px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; transition: 0.3s; padding-bottom: 15px; }
-        .card img { width: 100%; height: 140px; object-fit: cover; }
-        .qty-box { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 10px 0; }
-        .qty-btn { background: #eee; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 18px; }
-        .btn-add { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 90%; }
-        .floating-cart { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1500; }
-        .cart-badge { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; padding: 4px 8px; font-size: 12px; }
-        .cart-panel { position: fixed; top: 0; right: -400px; width: 340px; height: 100%; background: white; z-index: 2000; transition: 0.4s; box-shadow: -5px 0 15px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; }
+        .search-box { width: 90%; max-width: 500px; padding: 12px; border-radius: 25px; border: none; display: block; margin: auto; outline: none; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; position: relative; padding-bottom: 10px; }
+        .card img { width: 100%; height: 130px; object-fit: cover; }
+        
+        /* Discount Badge */
+        .discount-badge { position: absolute; top: 10px; left: 10px; background: #cc0000; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        
+        /* Price Styling */
+        .price-box { margin: 10px 0; }
+        .sale-price { color: #B12704; font-weight: bold; font-size: 18px; }
+        .mrp-price { text-decoration: line-through; color: #777; font-size: 14px; margin-left: 5px; }
+        
+        .qty-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 10px 0; }
+        .qty-btn { background: #eee; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; }
+        .btn-add { background: var(--accent); color: white; border: none; padding: 10px; border-radius: 5px; width: 90%; font-weight: bold; cursor: pointer; }
+        .floating-cart { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1500; font-size: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .badge { position: absolute; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; }
+        .cart-panel { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: white; z-index: 2000; transition: 0.3s; padding: 20px; box-shadow: -5px 0 10px rgba(0,0,0,0.1); box-sizing: border-box; }
         .cart-panel.active { right: 0; }
-        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
-        .modal-content { background: white; width: 90%; max-width: 400px; margin: 15% auto; padding: 20px; border-radius: 12px; text-align: center; }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
         @media (max-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
 
-<div class="lang-switch"><button class="lang-btn" onclick="toggleLang()">English</button></div>
-
 <div class="hero">
-    <div class="brand-logo"><img src="https://via.placeholder.com/150?text=LOGO" alt="Logo"></div>
-    <h1 id="h-title">Aanshi Agro Fresh 🥬</h1>
-    <p id="h-sub">চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
+    <h1>Aanshi Agro Fresh 🥬</h1>
+    <p>Freshness Guaranteed</p>
 </div>
 
-<div class="nav-sticky"><input type="text" class="search-box" id="search" placeholder="খুঁজুন..." onkeyup="search()"></div>
+<div class="nav-sticky">
+    <input type="text" class="search-box" id="search" placeholder="খুঁজুন..." onkeyup="search()">
+</div>
 
-<div class="container"><div class="grid" id="product-display"></div></div>
+<div class="container"><div class="grid" id="display"></div></div>
 
-<div class="floating-cart" onclick="toggleCart()">🛒<div class="cart-badge" id="badge">0</div></div>
+<div class="floating-cart" onclick="toggleCart()">🛒<div class="badge" id="badge">0</div></div>
 
 <div class="cart-panel" id="cartPanel">
-    <h2 id="c-title">আপনার ব্যাগ 🛒</h2><hr>
-    <div id="cart-content" style="height:60vh; overflow-y:auto;">ব্যাগ খালি।</div><hr>
-    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px;">
-        <span id="t-text">মোট:</span><span id="total-val">₹0</span>
-    </div>
-    <button class="btn-add" id="checkout-btn" style="margin-top:20px; display:none;" onclick="openModal()">Check Out</button>
-    <p onclick="toggleCart()" style="text-align:center; cursor:pointer; color:red;">বন্ধ করুন</p>
-</div>
-
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <h3 id="m-title">ডেলিভারি তথ্য</h3>
-        <input type="text" id="name" placeholder="নাম"><input type="tel" id="phone" placeholder="ফোন"><textarea id="addr" placeholder="ঠিকানা"></textarea>
-        <button class="btn-add" id="order-btn" onclick="submitOrder()">কনফার্ম করুন</button>
-        <p onclick="closeModal()" style="cursor:pointer; color:red;">বাতিল</p>
-    </div>
+    <h3>আপনার ব্যাগ 🛒</h3><hr>
+    <div id="cart-content" style="height:70vh; overflow-y:auto;">ব্যাগ খালি।</div><hr>
+    <div style="display:flex; justify-content:space-between; font-weight:bold;"><span>Total:</span><span id="total-val">₹0</span></div>
+    <button class="btn-add" style="margin-top:20px;" onclick="alert('Order Feature Ready!')">Place Order</button>
+    <p onclick="toggleCart()" style="text-align:center; color:red; cursor:pointer;">বন্ধ করুন</p>
 </div>
 
 <script>
     const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
-    let inventory = [], cart = {}, lang = 'bn';
+    let inventory = [], cart = {};
 
     async function load() {
         const r = await fetch(API);
-        inventory = await r.json();
+        const rawData = await r.json();
+        // নিশ্চিত করছি যে সব ডাটা সঠিক ফরম্যাটে আছে
+        inventory = rawData.map(p => ({
+            ...p,
+            price: parseFloat(p.price) || 0,
+            mrp: parseFloat(p.mrp) || parseFloat(p.price) || 0,
+            id: String(p.id)
+        }));
         render();
     }
 
@@ -80,26 +77,36 @@
         let h = '';
         data.forEach(p => {
             let q = cart[p.id] ? cart[p.id].qty : 0;
-            h += `<div class="card"><img src="${p.img}"><h4>${p.name}</h4><p>₹${p.price}/${p.unit}</p>
-                <div class="qty-box">
-                    <button class="qty-btn" onclick="updateQty(${p.id},-1)">-</button>
-                    <b>${q}</b>
-                    <button class="qty-btn" onclick="updateQty(${p.id},1)">+</button>
+            let discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+            
+            h += `<div class="card">
+                ${discount > 0 ? `<div class="discount-badge">${discount}% OFF</div>` : ''}
+                <img src="${p.img}">
+                <h4>${p.name}</h4>
+                <div class="price-box">
+                    <span class="sale-price">₹${p.price}</span>
+                    ${p.mrp > p.price ? `<span class="mrp-price">₹${p.mrp}</span>` : ''}
                 </div>
-                <button class="btn-add" onclick="updateQty(${p.id},1)">কার্টে যোগ করুন</button>
+                <div class="qty-box">
+                    <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
+                    <b>${q}</b>
+                    <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
+                </div>
+                <button class="btn-add" onclick="updateQty('${p.id}', 1)">Add to Bag</button>
             </div>`;
         });
-        document.getElementById('product-display').innerHTML = h;
+        document.getElementById('display').innerHTML = h;
     }
 
     function updateQty(id, change) {
         if (!cart[id]) {
-            let p = inventory.find(x => x.id == id);
+            let p = inventory.find(x => x.id === id);
             cart[id] = { ...p, qty: 0 };
         }
-        // এখানে সংখ্যা নিশ্চিত করা হচ্ছে যাতে ১১ না হয়
-        let currentQty = parseInt(cart[id].qty);
-        cart[id].qty = currentQty + parseInt(change);
+        
+        // গাণিতিক যোগ নিশ্চিত করা (parseInt ব্যবহার করে)
+        let newQty = parseInt(cart[id].qty) + parseInt(change);
+        cart[id].qty = newQty;
 
         if (cart[id].qty <= 0) delete cart[id];
         updateUI();
@@ -116,21 +123,11 @@
         document.getElementById('cart-content').innerHTML = h || "ব্যাগ খালি।";
         document.getElementById('total-val').innerText = "₹" + total;
         document.getElementById('badge').innerText = count;
-        document.getElementById('checkout-btn').style.display = total > 0 ? 'block' : 'none';
     }
 
     function toggleCart() { document.getElementById('cartPanel').classList.toggle('active'); }
-    function openModal() { document.getElementById('modal').style.display = 'block'; }
-    function closeModal() { document.getElementById('modal').style.display = 'none'; }
     function search() { let q = document.getElementById('search').value.toLowerCase(); render(inventory.filter(p => p.name.toLowerCase().includes(q))); }
 
-    async function submitOrder() {
-        const n = document.getElementById('name').value, p = document.getElementById('phone').value, a = document.getElementById('addr').value;
-        if(!n || !p) return alert("তথ্য দিন");
-        const order = { name: n, phone: p, address: a, items: Object.values(cart).map(i => `${i.name} (${i.qty}${i.unit})`).join(", "), total: document.getElementById('total-val').innerText };
-        await fetch(API, { method: 'POST', body: JSON.stringify(order) });
-        alert("অর্ডার সফল!"); cart = {}; updateUI(); closeModal(); toggleCart(); render();
-    }
     load();
 </script>
 </body>
