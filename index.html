@@ -3,59 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aanshi Agro Fresh</title>
+    <title>Aanshi Agro Fresh - Freshness Delivered</title>
     <style>
-        :root { --primary: #2e7d32; --accent: #ffa41c; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
-
-        /* Header & Hero - প্রথম ডিজাইনের মতো সুন্দর */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200');
-            background-size: cover; background-position: center; height: 300px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center;
+        :root {
+            --primary: #2e7d32;
+            --accent: #ffa41c;
+            --white: #ffffff;
+            --bg: #f4f7f6;
         }
-        .hero h1 { font-size: 3rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
 
-        .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 15px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .search-box { width: 90%; max-width: 600px; padding: 12px 20px; border-radius: 30px; border: none; font-size: 16px; outline: none; display: block; margin: auto; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; transition: 0.3s; }
 
-        .container { max-width: 1200px; margin: 30px auto; display: flex; flex-wrap: wrap; gap: 20px; padding: 0 15px; }
-        .products-grid { flex: 3; min-width: 300px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        /* Language Switcher */
+        .lang-switch { position: absolute; top: 20px; right: 20px; z-index: 2000; }
+        .lang-btn { background: var(--white); border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        /* Product Cards */
-        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; position: relative; border: 1px solid #eee; text-align: center; }
-        .card img { width: 100%; height: 160px; object-fit: cover; }
-        .discount-tag { position: absolute; top: 10px; left: 10px; background: #e62117; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
-        .card-info { padding: 15px; }
-        .price-now { color: var(--primary); font-weight: bold; font-size: 20px; }
-        .price-was { text-decoration: line-through; color: #888; font-size: 14px; margin-left: 8px; }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center; height: 55vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center; padding: 20px;
+        }
 
-        .qty-controls { display: flex; align-items: center; justify-content: center; margin: 10px 0; gap: 15px; }
-        .qty-btn { background: #f0f0f0; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 18px; }
-        .add-btn { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .brand-logo {
+            width: 150px; height: 150px;
+            background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 15px; border: 5px solid var(--accent);
+            overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Sidebar Cart */
-        .cart-sidebar { flex: 1; min-width: 320px; background: white; padding: 25px; border-radius: 15px; height: fit-content; position: sticky; top: 100px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); }
+        .hero h1 { font-size: 2.5rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.1rem; margin-top: 10px; opacity: 0.9; }
+
+        .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .search-box { width: 95%; max-width: 600px; padding: 12px 20px; border-radius: 30px; border: none; font-size: 16px; outline: none; display: block; margin: auto; }
+
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 150px; object-fit: cover; }
         
-        /* Modal */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
-        .modal-content { background: white; width: 90%; max-width: 450px; margin: 10% auto; padding: 30px; border-radius: 20px; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px; }
+        /* Discount Tag */
+        .discount-tag { position: absolute; top: 10px; left: 10px; background: #e62117; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        
+        .card h4 { margin: 10px 5px; font-size: 15px; height: 40px; overflow: hidden; padding: 0 5px; }
+        .price { color: var(--primary); font-weight: bold; font-size: 18px; margin-bottom: 2px; }
+        .mrp { text-decoration: line-through; color: #888; font-size: 14px; margin-bottom: 10px; display: block; }
+
+        .qty-box { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
+        .qty-btn { background: #eee; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 18px; }
+        .btn-add { background: var(--accent); color: white; border: none; padding: 10px; width: 90%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+
+        .floating-cart {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--primary); color: white;
+            width: 65px; height: 65px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 1500;
+        }
+        .cart-badge {
+            position: absolute; top: -5px; right: -5px;
+            background: red; color: white; border-radius: 50%;
+            padding: 5px 10px; font-size: 12px; font-weight: bold;
+        }
+
+        .cart-panel {
+            position: fixed; top: 0; right: -400px; width: 350px; height: 100%;
+            background: white; z-index: 2000; transition: 0.4s;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1); padding: 25px; box-sizing: border-box;
+            display: flex; flex-direction: column;
+        }
+        .cart-panel.active { right: 0; }
+        .close-cart { font-size: 30px; cursor: pointer; color: #666; position: absolute; top: 15px; left: 15px; }
+        
+        #cart-content { flex: 1; overflow-y: auto; margin-top: 40px; }
+
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .modal-content { background: white; width: 90%; max-width: 400px; margin: 15% auto; padding: 25px; border-radius: 15px; text-align: center; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+        .btn-order { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .cart-sidebar { position: static; width: 100%; margin-top: 20px; }
             .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .hero h1 { font-size: 1.8rem; }
+            .cart-panel { width: 300px; }
         }
     </style>
 </head>
 <body>
 
+<div class="lang-switch">
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+</div>
+
 <div class="hero">
-    <h1>Aanshi Agro Fresh 🥬</h1>
-    <p>Freshness Guaranteed from Field to Table</p>
+    <div class="brand-logo">
+        <img src="https://via.placeholder.com/150?text=LOGO" alt="Logo">
+    </div>
+    <h1 id="heroTitle">Aanshi Agro Fresh 🥬</h1>
+    <p id="heroSubtitle">চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
 </div>
 
 <div class="nav-sticky">
@@ -63,31 +114,36 @@
 </div>
 
 <div class="container">
-    <div class="products-grid">
-        <div id="loader" style="text-align:center; padding:20px;">প্রোডাক্ট লোড হচ্ছে...</div>
-        <div class="grid" id="display"></div>
-    </div>
+    <div id="loader" style="text-align:center; font-weight:bold;">প্রোডাক্ট লোড হচ্ছে...</div>
+    <div class="grid" id="product-display"></div>
+</div>
 
-    <div class="cart-sidebar">
-        <h2 style="margin-top:0;">আপনার ব্যাগ 🛒</h2>
-        <div id="cart-items" style="color: #666; margin-bottom: 20px;">ব্যাগ খালি।</div>
-        <hr>
-        <div style="display:flex; justify-content:space-between; font-size:22px; font-weight:bold; color: var(--primary);">
-            <span>মোট মূল্য:</span>
-            <span id="total-val">₹0</span>
-        </div>
-        <button class="add-btn" id="checkout-btn" style="margin-top:20px; display:none;" onclick="openModal()">Order Now (COD)</button>
+<div class="floating-cart" onclick="toggleCart()">
+    <span style="font-size: 28px;">🛒</span>
+    <div class="cart-badge" id="badge">0</div>
+</div>
+
+<div class="cart-panel" id="cartPanel">
+    <span class="close-cart" onclick="toggleCart()">&times;</span>
+    <h2 id="cartTitle" style="text-align: center;">আপনার ব্যাগ 🛒</h2>
+    <hr>
+    <div id="cart-content">ব্যাগ খালি।</div>
+    <hr>
+    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 20px; padding: 10px 0;">
+        <span id="totalText">মোট মূল্য:</span>
+        <span id="total-val">₹0</span>
     </div>
+    <button class="btn-order" id="checkout-btn" style="display:none;" onclick="openModal()">Check Out (COD)</button>
 </div>
 
 <div id="modal" class="modal">
     <div class="modal-content">
-        <h2 style="margin-top:0; color: var(--primary);">অর্ডার কনফার্ম করুন</h2>
+        <h3 id="modalTitle" style="color: var(--primary);">ডেলিভারি তথ্য দিন</h3>
         <input type="text" id="name" placeholder="আপনার নাম">
         <input type="tel" id="phone" placeholder="মোবাইল নম্বর">
         <textarea id="addr" placeholder="পুরো ঠিকানা (পাড়া, ব্লক, পিন কোড)" rows="3"></textarea>
-        <button class="add-btn" onclick="submitOrder()">Confirm Order</button>
-        <p onclick="closeModal()" style="text-align:center; color:red; cursor:pointer; margin-top:15px;">বাতিল করুন</p>
+        <button class="btn-order" id="finalOrderBtn" onclick="submitOrder()">অর্ডার কনফার্ম করুন</button>
+        <p id="cancelBtn" onclick="closeModal()" style="color:red; cursor:pointer; margin-top:15px; font-size:14px;">বাতিল করুন</p>
     </div>
 </div>
 
@@ -95,91 +151,170 @@
     const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
     let inventory = [];
     let cart = {};
+    let lang = 'bn';
 
-    async function load() {
-        const r = await fetch(API);
-        const data = await r.json();
-        inventory = data.map(p => ({
-            ...p,
-            price: Number(p.price),
-            mrp: Number(p.mrp || p.price),
-            id: String(p.id)
-        }));
-        document.getElementById('loader').style.display = 'none';
+    const translations = {
+        en: {
+            heroTitle: "Aanshi Agro Fresh 🥬",
+            heroSubtitle: "Freshness from farmer's field to your door",
+            searchPlaceholder: "Search vegetables or fruits...",
+            cartTitle: "Your Cart 🛒",
+            emptyCart: "Cart is empty.",
+            totalText: "Total:",
+            checkout: "Check Out (COD)",
+            modalTitle: "Delivery Details",
+            namePH: "Your Name",
+            phonePH: "Mobile Number",
+            addressPH: "Full Address",
+            orderBtn: "Confirm Order",
+            cancelBtn: "Cancel",
+            addBtn: "Add to Cart",
+            loading: "Loading Products...",
+            success: "Order Placed Successfully! Sent to Telegram and Sheet."
+        },
+        bn: {
+            heroTitle: "Aanshi Agro Fresh 🥬",
+            heroSubtitle: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়",
+            searchPlaceholder: "সবজি বা ফল খুঁজুন...",
+            cartTitle: "আপনার ব্যাগ 🛒",
+            emptyCart: "ব্যাগ একদম খালি।",
+            totalText: "মোট মূল্য:",
+            checkout: "Check Out (COD)",
+            modalTitle: "ডেলিভারি তথ্য দিন",
+            namePH: "আপনার নাম",
+            phonePH: "মোবাইল নম্বর",
+            addressPH: "পুরো ঠিকানা (পাড়া, ব্লক, পিন কোড)",
+            orderBtn: "অর্ডার কনফার্ম করুন",
+            cancelBtn: "বাতিল করুন",
+            addBtn: "কার্টে যোগ করুন",
+            loading: "প্রোডাক্ট লোড হচ্ছে...",
+            success: "অর্ডার সফল হয়েছে! টেলিগ্রাম এবং গুগল শিটে পাঠানো হয়েছে।"
+        }
+    };
+
+    function toggleLang() {
+        lang = lang === 'bn' ? 'en' : 'bn';
+        document.getElementById('langBtn').innerText = lang === 'bn' ? 'English' : 'বাংলা';
+        applyLang();
+    }
+
+    function applyLang() {
+        const t = translations[lang];
+        document.getElementById('heroTitle').innerText = t.heroTitle;
+        document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+        document.getElementById('search').placeholder = t.searchPlaceholder;
+        document.getElementById('cartTitle').innerText = t.cartTitle;
+        document.getElementById('totalText').innerText = t.totalText;
+        document.getElementById('checkout-btn').innerText = t.checkout;
+        document.getElementById('modalTitle').innerText = t.modalTitle;
+        document.getElementById('name').placeholder = t.namePH;
+        document.getElementById('phone').placeholder = t.phonePH;
+        document.getElementById('addr').placeholder = t.addressPH;
+        document.getElementById('finalOrderBtn').innerText = t.orderBtn;
+        document.getElementById('cancelBtn').innerText = t.cancelBtn;
         render();
     }
 
-    function render(list = inventory) {
+    async function load() {
+        try {
+            const r = await fetch(API);
+            inventory = await r.json();
+            document.getElementById('loader').style.display = 'none';
+            render();
+        } catch(e) { document.getElementById('loader').innerText = "Error Loading Products"; }
+    }
+
+    function render(data = inventory) {
         let h = '';
-        list.forEach(p => {
+        data.forEach(p => {
+            let pMRP = Number(p.mrp) || Number(p.price);
+            let pPrice = Number(p.price);
+            let discount = Math.round(((pMRP - pPrice) / pMRP) * 100);
             let q = cart[p.id] ? cart[p.id].qty : 0;
-            let disc = Math.round(((p.mrp - p.price) / p.mrp) * 100);
-            h += `<div class="card">
-                ${disc > 0 ? `<div class="discount-tag">${disc}% ছাড়</div>` : ''}
-                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200'">
-                <div class="card-info">
-                    <h3 style="margin:0 0 10px; font-size:18px;">${p.name}</h3>
-                    <div style="margin-bottom:10px;">
-                        <span class="price-now">₹${p.price}</span>
-                        ${p.mrp > p.price ? `<span class="price-was">₹${p.mrp}</span>` : ''}
+
+            h += `
+                <div class="card">
+                    ${discount > 0 ? `<div class="discount-tag">${discount}% OFF</div>` : ''}
+                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Agro+Fresh'">
+                    <h4>${p.name}</h4>
+                    <span class="price">₹${pPrice} / ${p.unit}</span>
+                    ${pMRP > pPrice ? `<span class="mrp">₹${pMRP}</span>` : `<span class="mrp" style="visibility:hidden">.</span>`}
+                    <div class="qty-box">
+                        <button class="qty-btn" onclick="updateQty(${p.id}, -1)">-</button>
+                        <span id="q-${p.id}">${q}</span>
+                        <button class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
                     </div>
-                    <div class="qty-controls">
-                        <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
-                        <b style="font-size:20px;">${q}</b>
-                        <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
-                    </div>
-                    <button class="add-btn" onclick="updateQty('${p.id}', 1)">কার্টে যোগ করুন</button>
-                </div>
-            </div>`;
+                    <button class="btn-add" onclick="updateQty(${p.id}, 1)">${translations[lang].addBtn}</button>
+                </div>`;
         });
-        document.getElementById('display').innerHTML = h;
+        document.getElementById('product-display').innerHTML = h;
     }
 
     function updateQty(id, change) {
         if (!cart[id]) {
-            let p = inventory.find(x => x.id === id);
+            const p = inventory.find(x => x.id == id);
             cart[id] = { ...p, qty: 0 };
         }
         
-        // সঠিক গাণিতিক যোগ নিশ্চিত করার জন্য Number ব্যবহার
-        let current = Number(cart[id].qty);
-        let updated = current + Number(change);
-        cart[id].qty = Math.max(0, updated);
+        // ১+১=১১ হওয়া আটকাতে এখানে parseInt ব্যবহার করা হলো
+        let currentQty = parseInt(cart[id].qty);
+        let changeVal = parseInt(change);
+        cart[id].qty = currentQty + changeVal;
 
         if (cart[id].qty <= 0) delete cart[id];
-        updateUI();
-        render();
+        
+        updateCart();
+        render(); // এটি সরাসরি স্ক্রিনে আপডেট দেখাবে
     }
 
-    function updateUI() {
-        let h = '', total = 0;
+    function updateCart() {
+        let h = ''; let totalVal = 0; let count = 0;
         Object.values(cart).forEach(i => {
-            let sub = i.price * i.qty;
-            total += sub;
-            h += `<div style="margin-bottom:12px;"><b>${i.name}</b><br>${i.qty} ${i.unit} x ₹${i.price} = ₹${sub}</div><hr>`;
+            let s = Number(i.price) * Number(i.qty);
+            totalVal += s;
+            count += Number(i.qty);
+            h += `<div style="margin-bottom:15px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+                    <div style="font-weight:bold;">${i.name}</div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>${i.qty} x ₹${i.price}</span>
+                        <span>₹${s}</span>
+                    </div>
+                  </div>`;
         });
-        document.getElementById('cart-items').innerHTML = h || "ব্যাগ খালি।";
-        document.getElementById('total-val').innerText = "₹" + total;
-        document.getElementById('checkout-btn').style.display = total > 0 ? 'block' : 'none';
+        document.getElementById('cart-content').innerHTML = h || translations[lang].emptyCart;
+        document.getElementById('total-val').innerText = "₹" + totalVal;
+        document.getElementById('badge').innerText = count;
+        document.getElementById('checkout-btn').style.display = totalVal > 0 ? 'block' : 'none';
+    }
+
+    function toggleCart() {
+        document.getElementById('cartPanel').classList.toggle('active');
+    }
+
+    function search() {
+        let q = document.getElementById('search').value.toLowerCase();
+        render(inventory.filter(p => p.name.toLowerCase().includes(q)));
     }
 
     function openModal() { document.getElementById('modal').style.display = 'block'; }
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
-    function search() { render(inventory.filter(p => p.name.toLowerCase().includes(document.getElementById('search').value.toLowerCase()))); }
 
     async function submitOrder() {
-        const n = document.getElementById('name').value, ph = document.getElementById('phone').value, ad = document.getElementById('addr').value;
-        if(!n || !ph || !ad) return alert("দয়া করে সব তথ্য পূরণ করুন!");
+        const n = document.getElementById('name').value;
+        const p = document.getElementById('phone').value;
+        const a = document.getElementById('addr').value;
+
+        if(!n || !p || !a) return alert("তথ্য দিন / Fill all details!");
 
         const order = {
-            name: n, phone: ph, address: ad,
+            name: n, phone: p, address: a,
             items: Object.values(cart).map(i => `${i.name} (${i.qty}${i.unit})`).join(", "),
             total: document.getElementById('total-val').innerText.replace('₹','')
         };
 
         await fetch(API, { method: 'POST', body: JSON.stringify(order) });
-        alert("অর্ডার সফল হয়েছে!");
-        cart = {}; updateUI(); closeModal(); render();
+        alert(translations[lang].success);
+        cart = {}; updateCart(); closeModal(); toggleCart(); render();
     }
 
     load();
