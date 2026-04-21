@@ -1,188 +1,47 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aanshi Agro Fresh - Freshness Delivered</title>
-    <style>
-        :root {
-            --primary: #2e7d32;
-            --accent: #ffa41c;
-            --white: #ffffff;
-            --bg: #f4f7f6;
-        }
+// --- CONFIGURATION ---
+const TELEGRAM_BOT_TOKEN = '8766683455:AAGMmmt55MNhDUqp95K4qiPa2u6TwM9DxWc'; 
+const TELEGRAM_CHAT_ID = '1404889982';
 
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
+function doGet() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Data");
+  var data = sheet.getDataRange().getValues();
+  var result = [];
+  
+  for (var i = 1; i < data.length; i++) {
+    result.push({
+      id: data[i][6] || i,   // Column G: ID
+      name: data[i][0],      // Column A: Title
+      unit: data[i][1],      // Column B: Unit
+      price: data[i][3],     // Column D: Sale Price
+      img: data[i][4]        // Column E: Image URL
+    });
+  }
+  return ContentService.createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center; height: 50vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; padding: 20px;
-        }
-
-        .hero h1 { font-size: 2.5rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.1rem; margin-top: 10px; opacity: 0.9; }
-
-        /* Search Bar */
-        .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .search-box { width: 95%; max-width: 600px; padding: 12px 20px; border-radius: 30px; border: none; font-size: 16px; outline: none; display: block; margin: auto; }
-
-        /* Main Content */
-        .container { max-width: 1200px; margin: 30px auto; display: flex; flex-wrap: wrap; gap: 20px; padding: 0 15px; }
-        .products-grid { flex: 3; min-width: 300px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 15px; }
-
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 140px; object-fit: cover; }
-        .card h4 { margin: 10px 5px; font-size: 15px; height: 35px; overflow: hidden; }
-        .price { color: var(--primary); font-weight: bold; font-size: 17px; margin-bottom: 10px; }
-
-        /* Controls */
-        .qty-box { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
-        .qty-btn { background: #eee; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-weight: bold; }
-        .btn-add { background: var(--accent); color: white; border: none; padding: 10px; width: 90%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
-
-        /* Sidebar Cart */
-        .cart-sidebar { flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 15px; height: fit-content; position: sticky; top: 100px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-
-        /* Modal */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
-        .modal-content { background: white; width: 90%; max-width: 400px; margin: 15% auto; padding: 25px; border-radius: 15px; text-align: center; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
-        .btn-order { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
-
-        @media (max-width: 768px) {
-            .cart-sidebar { position: static; width: 100%; }
-            .grid { grid-template-columns: repeat(2, 1fr); }
-            .hero h1 { font-size: 1.8rem; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="hero">
-    <h1>Aanshi Agro Fresh 🥬</h1>
-    <p>চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
-</div>
-
-<div class="nav-sticky">
-    <input type="text" class="search-box" id="search" placeholder="সবজি বা ফল খুঁজুন..." onkeyup="search()">
-</div>
-
-<div class="container">
-    <div class="products-grid">
-        <div id="loader" style="text-align:center;">প্রোডাক্ট লোড হচ্ছে...</div>
-        <div class="grid" id="product-display"></div>
-    </div>
-
-    <div class="cart-sidebar">
-        <h3 style="margin-top:0;">আপনার ব্যাগ 🛒</h3>
-        <div id="cart-items" style="font-size: 14px; color: #555;">ব্যাগ একদম খালি।</div>
-        <hr>
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 18px;">
-            <span>মোট মূল্য:</span>
-            <span id="total-val">₹0</span>
-        </div>
-        <button class="btn-order" id="checkout-btn" style="margin-top:15px; display:none;" onclick="openModal()">Check Out (COD)</button>
-    </div>
-</div>
-
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <h3 style="color: var(--primary);">ডেলিভারি তথ্য দিন</h3>
-        <input type="text" id="name" placeholder="আপনার নাম">
-        <input type="tel" id="phone" placeholder="মোবাইল নম্বর">
-        <textarea id="addr" placeholder="পুরো ঠিকানা (পাড়া, ব্লক, পিন কোড)" rows="3"></textarea>
-        <button class="btn-order" onclick="submitOrder()">অর্ডার কনফার্ম করুন</button>
-        <p onclick="closeModal()" style="color:red; cursor:pointer; margin-top:15px; font-size:14px;">বাতিল করুন</p>
-    </div>
-</div>
-
-<script>
-    const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
-    let inventory = [];
-    let cart = {};
-
-    async function load() {
-        const r = await fetch(API);
-        inventory = await r.json();
-        document.getElementById('loader').style.display = 'none';
-        render();
-    }
-
-    function render(data = inventory) {
-        let h = '';
-        data.forEach(p => {
-            h += `
-                <div class="card">
-                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Agro+Fresh'">
-                    <h4>${p.name}</h4>
-                    <p class="price">₹${p.price} / ${p.unit}</p>
-                    <div class="qty-box">
-                        <button class="qty-btn" onclick="updateQty(${p.id}, -1)">-</button>
-                        <span id="q-${p.id}">${cart[p.id]?.qty || 0}</span>
-                        <button class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
-                    </div>
-                    <button class="btn-add" onclick="updateQty(${p.id}, 1)">কার্টে যোগ করুন</button>
-                </div>`;
-        });
-        document.getElementById('product-display').innerHTML = h;
-    }
-
-    function updateQty(id, change) {
-        if (!cart[id]) {
-            const p = inventory.find(x => x.id == id);
-            cart[id] = { ...p, qty: 0 };
-        }
-        cart[id].qty += change;
-        if (cart[id].qty <= 0) delete cart[id];
-        
-        if(document.getElementById(`q-${id}`)) document.getElementById(`q-${id}`).innerText = cart[id]?.qty || 0;
-        updateCart();
-    }
-
-    function updateCart() {
-        let h = ''; let t = 0;
-        Object.values(cart).forEach(i => {
-            let s = i.price * i.qty;
-            t += s;
-            h += `<div style="margin-bottom:8px;"><b>${i.name}</b> x ${i.qty} = ₹${s}</div>`;
-        });
-        document.getElementById('cart-items').innerHTML = h || "ব্যাগ একদম খালি।";
-        document.getElementById('total-val').innerText = "₹" + t;
-        document.getElementById('checkout-btn').style.display = t > 0 ? 'block' : 'none';
-    }
-
-    function search() {
-        let q = document.getElementById('search').value.toLowerCase();
-        render(inventory.filter(p => p.name.toLowerCase().includes(q)));
-    }
-
-    function openModal() { document.getElementById('modal').style.display = 'block'; }
-    function closeModal() { document.getElementById('modal').style.display = 'none'; }
-
-    async function submitOrder() {
-        const n = document.getElementById('name').value;
-        const p = document.getElementById('phone').value;
-        const a = document.getElementById('addr').value;
-
-        if(!n || !p || !a) return alert("সব তথ্য দিন!");
-
-        const order = {
-            name: n, phone: p, address: a,
-            items: Object.values(cart).map(i => `${i.name} (${i.qty}${i.unit})`).join(", "),
-            total: document.getElementById('total-val').innerText.replace('₹','')
-        };
-
-        await fetch(API, { method: 'POST', body: JSON.stringify(order) });
-        alert("অর্ডার সফল হয়েছে! টেলিগ্রাম এবং গুগল শিটে পাঠানো হয়েছে।");
-        cart = {}; updateCart(); closeModal(); render();
-    }
-
-    load();
-</script>
-</body>
-</html>
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Orders");
+  if (!sheet) {
+    SpreadsheetApp.getActiveSpreadsheet().insertSheet("Orders");
+    sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Orders");
+    sheet.appendRow(["Time", "Name", "Phone", "Address", "Items", "Total"]);
+  }
+  
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([new Date(), data.name, data.phone, data.address, data.items, data.total]);
+  
+  // Telegram Notification
+  var message = "🚚 *Aanshi Agro Fresh - New Order!*\n\n" +
+                "*Customer:* " + data.name + "\n" +
+                "*Phone:* " + data.phone + "\n" +
+                "*Address:* " + data.address + "\n\n" +
+                "*Items Ordered:*\n" + data.items + "\n\n" +
+                "*Total Payable:* ₹" + data.total + "\n" +
+                "------------------------";
+  
+  var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage?chat_id=" + TELEGRAM_CHAT_ID + "&text=" + encodeURIComponent(message) + "&parse_mode=Markdown";
+  UrlFetchApp.fetch(url);
+  
+  return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+}
