@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Store</title>
+</head>
+
+<body>
+
+<h1>🛒 Grocery Store</h1>
+
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+<input id="address" placeholder="Address"><br><br>
+
+<div id="products"></div>
+<h2>Cart</h2>
+<div id="cart"></div>
+
+<button onclick="placeOrder()">Place Order (COD)</button>
+
+<script>
+
+const API_URL = "PASTE_YOUR_SCRIPT_URL";
+
+const products = [
+  {id:1,name:"Potato", price:20, unit:"kg"},
+  {id:2,name:"Onion", price:30, unit:"kg"},
+  {id:3,name:"Banana", price:5, unit:"pc"}
+];
+
+let cart = [];
+
+function showProducts(){
+  let html="";
+  products.forEach(p=>{
+    html += `<div>
+      ${p.name} ₹${p.price}/${p.unit}
+      <button onclick="add(${p.id})">Add</button>
+    </div>`;
+  });
+  document.getElementById("products").innerHTML=html;
+}
+
+function add(id){
+  let item = cart.find(p=>p.id===id);
+  if(item){ item.qty++; }
+  else{
+    let p = products.find(p=>p.id===id);
+    cart.push({...p, qty:1});
+  }
+  showCart();
+}
+
+function showCart(){
+  let html="", total=0;
+
+  cart.forEach(p=>{
+    let sub = p.price*p.qty;
+    total += sub;
+    html += `<p>${p.name} x ${p.qty} = ₹${sub}</p>`;
+  });
+
+  html += `<h3>Total ₹${total}</h3>`;
+  document.getElementById("cart").innerHTML=html;
+}
+
+function placeOrder(){
+  if(cart.length===0){ alert("Cart empty"); return; }
+
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+
+  let items="", total=0;
+
+  cart.forEach(p=>{
+    items += `${p.name} ${p.qty}${p.unit} = ₹${p.price*p.qty}\n`;
+    total += p.price*p.qty;
+  });
+
+  fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify({name, phone, address, items, total})
+  })
+  .then(()=>alert("Order Placed"));
+}
+
+showProducts();
+
+</script>
+
+</body>
+</html>
