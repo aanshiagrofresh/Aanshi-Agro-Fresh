@@ -1,207 +1,169 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aanshi Agro Fresh</title>
-    <style>
-        :root { --primary: #2e7d32; --accent: #ffa41c; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: var(--bg); overflow-x: hidden; }
-        
-        /* Language & Header */
-        .header-top { position: relative; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=800'); background-size: cover; height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
-        .lang-switch { position: absolute; top: 15px; right: 15px; }
-        .lang-btn { background: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .logo-circle { width: 100px; height: 100px; background: white; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 10px; overflow: hidden; }
-        .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aanshi Agro Fresh</title>
 
-        /* Search Bar */
-        .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 10px; z-index: 1000; }
-        .search-box { width: 90%; max-width: 500px; padding: 10px 15px; border-radius: 25px; border: none; display: block; margin: auto; outline: none; }
+<style>
+:root {
+    --primary: #2e7d32;
+    --accent: #ffa41c;
+    --white: #ffffff;
+    --bg: #f4f7f6;
+}
+body { font-family: 'Segoe UI'; margin: 0; background: var(--bg); }
 
-        /* Product Grid */
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 10px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
+/* Hero */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1542838132-92c53300491e');
+    height: 50vh;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    color:white;
+}
 
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; position: relative; display: flex; flex-direction: column; }
-        .card img { width: 100%; height: 140px; object-fit: cover; }
-        .discount-tag { position: absolute; top: 8px; left: 8px; background: #e62117; color: white; padding: 3px 7px; border-radius: 5px; font-size: 11px; font-weight: bold; }
-        
-        .card-body { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .price-now { color: var(--primary); font-weight: bold; font-size: 18px; }
-        .price-was { text-decoration: line-through; color: #888; font-size: 13px; margin-left: 5px; }
+/* Grid */
+.container { padding: 20px; }
+.grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+    gap:15px;
+}
+.card {
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    text-align:center;
+}
+.card img { width:100%; height:140px; object-fit:cover; }
 
-        /* Controls */
-        .qty-box { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0; }
-        .qty-btn { background: #eee; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer; }
-        .btn-add { background: var(--accent); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer; }
+.price { margin:8px 0; }
 
-        /* Floating Cart */
-        .floating-cart { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1500; }
-        .badge { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; padding: 4px 8px; font-size: 12px; font-weight: bold; }
+/* Cart */
+.floating-cart {
+    position:fixed; bottom:20px; right:20px;
+    background:green; color:white;
+    width:60px; height:60px;
+    display:flex; justify-content:center; align-items:center;
+    border-radius:50%;
+}
 
-        /* Side Panel */
-        .cart-panel { position: fixed; top: 0; right: -100%; width: 320px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 20px; box-sizing: border-box; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
-        .cart-panel.active { right: 0; }
-        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
-        .modal-content { background: white; width: 90%; max-width: 400px; margin: 15% auto; padding: 25px; border-radius: 15px; text-align: center; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
-    </style>
+/* Modal */
+.modal {
+    display:none; position:fixed;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.5);
+}
+.modal-content {
+    background:white;
+    width:90%; max-width:400px;
+    margin:20% auto;
+    padding:20px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="header-top">
-    <div class="lang-switch"><button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button></div>
-    <div class="logo-circle"><img src="logo.jpg.jpge" alt="Logo"></div>
-    <h1 id="heroTitle">Aanshi Agro Fresh 🥬</h1>
-    <p id="heroSubtitle">চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
-</div>
-
-<div class="nav-sticky">
-    <input type="text" class="search-box" id="search" placeholder="খুঁজুন..." onkeyup="search()">
+<div class="hero">
+    <h1>Aanshi Agro Fresh 🥬</h1>
 </div>
 
 <div class="container">
-    <div id="loader" style="text-align:center; padding:20px; font-weight:bold;">অপেক্ষা করুন...</div>
-    <div class="grid" id="product-display"></div>
+    <div class="grid" id="products"></div>
 </div>
 
-<div class="floating-cart" onclick="toggleCart()">🛒<div class="badge" id="badge">0</div></div>
+<div class="floating-cart" onclick="openModal()">🛒</div>
 
-<div class="cart-panel" id="cartPanel">
-    <h2 id="cartTitle">আপনার ব্যাগ 🛒</h2><hr>
-    <div id="cart-content" style="max-height: 60vh; overflow-y: auto;">ব্যাগ খালি।</div><hr>
-    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 20px;">
-        <span id="totalText">মোট:</span><span id="total-val">₹0</span>
-    </div>
-    <button class="btn-add" style="margin-top:20px; background:var(--primary);" onclick="openModal()">Check Out</button>
-    <p onclick="toggleCart()" style="text-align:center; color:red; cursor:pointer; margin-top:15px;">বন্ধ করুন</p>
-</div>
-
-<div id="modal" class="modal">
+<div class="modal" id="modal">
     <div class="modal-content">
-        <h3 id="modalTitle">অর্ডার দিন</h3>
-        <input type="text" id="custName" placeholder="আপনার নাম">
-        <input type="tel" id="custPhone" placeholder="মোবাইল নম্বর">
-        <textarea id="custAddr" placeholder="পুরো ঠিকানা" rows="3"></textarea>
-        <button class="btn-add" id="orderBtn" onclick="submitOrder()">Confirm Order</button>
-        <p onclick="closeModal()" style="color:red; cursor:pointer;">বাতিল করুন</p>
+        <input id="name" placeholder="Name"><br>
+        <input id="phone" placeholder="Phone"><br>
+        <textarea id="addr" placeholder="Address"></textarea><br>
+        <button onclick="submitOrder()">Order</button>
     </div>
 </div>
 
 <script>
-    const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
-    let inventory = [], cart = {}, lang = 'bn';
+const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
 
-    const t = {
-        en: { hT: "Aanshi Agro Fresh 🥬", hS: "Freshness from field to your door", sP: "Search...", cT: "Your Cart 🛒", tot: "Total:", check: "Check Out", add: "Add", mH: "Order Now", phN: "Name", phP: "Phone", phA: "Address", conf: "Confirm Order" },
-        bn: { hT: "Aanshi Agro Fresh 🥬", hS: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়", sP: "খুঁজুন...", cT: "আপনার ব্যাগ 🛒", tot: "মোট:", check: "চেক আউট", add: "কার্টে যোগ করুন", mH: "অর্ডার দিন", phN: "নাম", phP: "মোবাইল", phA: "পুরো ঠিকানা", conf: "অর্ডার কনফার্ম করুন" }
+let cart = {};
+let data = [];
+
+// Load products
+async function load() {
+    let r = await fetch(API);
+    data = await r.json();
+    render();
+}
+
+function render() {
+    let html = "";
+    data.forEach(p => {
+
+        html += `
+        <div class="card">
+            <img src="${p.img}">
+            <h4>${p.name}</h4>
+
+            <p class="price">
+                <span style="text-decoration:line-through;color:#888;">
+                    ₹${p.mrp}
+                </span>
+                <b style="color:green;"> ₹${p.price}</b>
+                <br>
+                <span style="color:red;">
+                    Save ₹${p.mrp - p.price}
+                </span> / ${p.unit}
+            </p>
+
+            <button onclick="add(${p.id})">Add</button>
+        </div>`;
+    });
+
+    document.getElementById("products").innerHTML = html;
+}
+
+function add(id) {
+    if(!cart[id]) cart[id] = 0;
+    cart[id]++;
+}
+
+function openModal() {
+    document.getElementById("modal").style.display = "block";
+}
+
+async function submitOrder() {
+
+    let total = 0;
+
+    const items = Object.entries(cart).map(([id, qty]) => {
+        let p = data.find(x => x.id == id);
+        let sub = p.price * qty;
+        total += sub;
+        return `${p.name} - ${qty} ${p.unit} = ₹${sub}`;
+    }).join("\n");
+
+    const order = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("addr").value,
+        items: items,
+        total: total
     };
 
-    async function load() {
-        try {
-            const r = await fetch(API);
-            inventory = await r.json();
-            document.getElementById('loader').style.display = 'none';
-            render();
-        } catch(e) { console.error(e); }
-    }
+    await fetch(API, {
+        method:"POST",
+        body: JSON.stringify(order)
+    });
 
-    function render(data = inventory) {
-        let html = "";
-        data.forEach(p => {
-            let sale = Number(p.price) || 0;
-            let mrp = Number(p.mrp) || sale;
-            let disc = Math.round(((mrp - sale) / mrp) * 100);
-            let q = cart[p.id] ? cart[p.id].qty : 0;
+    alert("Order Sent!");
+    cart = {};
+}
 
-            html += `<div class="card">
-                ${disc > 0 ? `<div class="discount-tag">${disc}% ছাড়</div>` : ""}
-                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150'">
-                <div class="card-body">
-                    <h4>${p.name}</h4>
-                    <div style="margin-bottom:10px;">
-                        <span class="price-now">₹${sale} / ${p.unit}</span>
-                        ${mrp > sale ? `<span class="price-was">₹${mrp}</span>` : ""}
-                    </div>
-                    <div class="qty-box">
-                        <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
-                        <b id="qty-${p.id}" style="font-size:18px;">${q}</b>
-                        <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
-                    </div>
-                    <button class="btn-add" onclick="updateQty('${p.id}', 1)">${t[lang].add}</button>
-                </div>
-            </div>`;
-        });
-        document.getElementById('product-display').innerHTML = html;
-    }
-
-    function updateQty(id, change) {
-        if (!cart[id]) {
-            let p = inventory.find(x => x.id == id);
-            cart[id] = { ...p, qty: 0 };
-        }
-        
-        // ১১ বা ২১ সমস্যা সমাধানের জন্য টাইপ কাস্টিং নিশ্চিত করা
-        let currentQty = Number(cart[id].qty);
-        let updatedQty = currentQty + Number(change);
-        cart[id].qty = Math.max(0, updatedQty);
-
-        if (cart[id].qty <= 0) delete cart[id];
-        
-        updateCart();
-        render();
-    }
-
-    function updateCart() {
-        let h = "", total = 0, count = 0;
-        Object.values(cart).forEach(i => {
-            let sub = i.price * i.qty;
-            total += sub;
-            count += Number(i.qty);
-            h += `<div style="margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
-                <b>${i.name}</b><br>${i.qty} x ₹${i.price} = ₹${sub}
-            </div>`;
-        });
-        document.getElementById('cart-content').innerHTML = h || (lang === 'bn' ? "ব্যাগ খালি।" : "Cart empty.");
-        document.getElementById('total-val').innerText = "₹" + total;
-        document.getElementById('badge').innerText = count;
-    }
-
-    function toggleLang() {
-        lang = lang === 'bn' ? 'en' : 'bn';
-        document.getElementById('langBtn').innerText = lang === 'bn' ? 'English' : 'বাংলা';
-        const txt = t[lang];
-        document.getElementById('heroTitle').innerText = txt.hT;
-        document.getElementById('heroSubtitle').innerText = txt.hS;
-        document.getElementById('search').placeholder = txt.sP;
-        document.getElementById('cartTitle').innerText = txt.cT;
-        document.getElementById('totalText').innerText = txt.tot;
-        document.getElementById('modalTitle').innerText = txt.mH;
-        document.getElementById('custName').placeholder = txt.phN;
-        document.getElementById('custPhone').placeholder = txt.phP;
-        document.getElementById('custAddr').placeholder = txt.phA;
-        document.getElementById('orderBtn').innerText = txt.conf;
-        render();
-    }
-
-    function toggleCart() { document.getElementById('cartPanel').classList.toggle('active'); }
-    function openModal() { document.getElementById('modal').style.display = 'block'; }
-    function closeModal() { document.getElementById('modal').style.display = 'none'; }
-    function search() { let q = document.getElementById('search').value.toLowerCase(); render(inventory.filter(p => p.name.toLowerCase().includes(q))); }
-
-    async function submitOrder() {
-        const n = document.getElementById('custName').value;
-        const p = document.getElementById('custPhone').value;
-        const a = document.getElementById('custAddr').value;
-        if(!n || !p) return alert("তথ্য দিন!");
-
-        const order = { name: n, phone: p, address: a, items: Object.values(cart).map(i => `${i.name} (${i.qty}${i.unit})`).join(", "), total: document.getElementById('total-val').innerText };
-        await fetch(API, { method: 'POST', body: JSON.stringify(order) });
-        alert("অর্ডার সফল!"); cart = {}; updateCart(); closeModal(); toggleCart(); render();
-    }
-    load();
+load();
 </script>
+
 </body>
 </html>
