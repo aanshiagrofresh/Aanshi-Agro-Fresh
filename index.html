@@ -14,7 +14,9 @@
 
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
 
-        /* হিরো সেকশন ও লোগো ফিক্স */
+        .lang-switch { position: absolute; top: 15px; right: 15px; z-index: 2000; }
+        .lang-btn { background: white; border: 2px solid var(--primary); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 14px; }
+
         .hero {
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80');
             background-size: cover; background-position: center; height: 35vh;
@@ -29,23 +31,19 @@
             margin-bottom: 10px; border: 3px solid var(--accent);
             overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
+        /* লোগো যাতে পুরো গোল জায়গায় ফিট হয় */
         .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
 
         .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; }
-        .search-box { width: 90%; max-width: 500px; padding: 10px 20px; border-radius: 30px; border: none; display: block; margin: auto; outline: none; }
+        .search-box { width: 90%; max-width: 500px; padding: 12px 20px; border-radius: 30px; border: none; display: block; margin: auto; outline: none; }
 
-        /* গ্রিড ফিক্স */
         .container { max-width: 1200px; margin: 20px auto; padding: 0 10px; }
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
-            gap: 15px; 
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
 
         .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; padding-bottom: 12px; }
         .card img { width: 100%; height: 130px; object-fit: cover; }
+        .card h4 { margin: 8px 5px; font-size: 15px; height: 38px; overflow: hidden; }
         
-        /* MRP ও Sale Price ডিজাইন */
         .price-container { margin: 10px 0; min-height: 50px; }
         .mrp { color: #999; text-decoration: line-through; font-size: 13px; margin-right: 5px; }
         .sale-price { color: var(--primary); font-weight: bold; font-size: 17px; }
@@ -55,7 +53,6 @@
         .qty-btn { background: #f0f0f0; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; }
         .btn-add { background: var(--accent); color: white; border: none; padding: 10px; width: 90%; border-radius: 20px; font-weight: bold; cursor: pointer; }
 
-        /* কার্ট ডিজাইন */
         .floating-cart { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1500; }
         .cart-badge { position: absolute; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 4px 8px; font-size: 12px; }
         
@@ -77,14 +74,20 @@
 </head>
 <body>
 
+<div class="lang-switch">
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+</div>
+
 <div class="hero">
-    <div class="brand-logo"><img src="logo.jpg.jpge" alt="Logo"></div>
-    <h1>Aanshi Agro Fresh 🥬</h1>
-    <p>চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
+    <div class="brand-logo">
+        <img src="logo.jpg.jpge" id="mainLogo" alt="Logo" onerror="this.src='https://via.placeholder.com/100?text=Logo'">
+    </div>
+    <h1 id="heroTitle">Aanshi Agro Fresh 🥬</h1>
+    <p id="heroSubtitle">চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
 </div>
 
 <div class="nav-sticky">
-    <input type="text" class="search-box" id="search" placeholder="খুঁজুন..." onkeyup="search()">
+    <input type="text" class="search-box" id="search" placeholder="সবজি বা ফল খুঁজুন..." onkeyup="search()">
 </div>
 
 <div class="container">
@@ -99,12 +102,12 @@
 
 <div class="cart-panel" id="cartPanel">
     <span class="close-cart" onclick="toggleCart()">&times;</span>
-    <h2 style="text-align: center;">আপনার ব্যাগ 🛒</h2>
+    <h2 id="cartHeader" style="text-align: center;">আপনার ব্যাগ 🛒</h2>
     <hr>
     <div id="cart-content">ব্যাগ খালি।</div>
     <hr>
     <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 18px; padding: 10px 0;">
-        <span>মোট:</span>
+        <span id="totalLabel">মোট:</span>
         <span id="total-val">₹0</span>
     </div>
     <button class="btn-order" id="checkout-btn" style="display:none;" onclick="openModal()">Check Out (COD)</button>
@@ -112,12 +115,12 @@
 
 <div id="modal" class="modal">
     <div class="modal-content">
-        <h3>ডেলিভারি তথ্য দিন</h3>
+        <h3 id="modalHeader">ডেলিভারি তথ্য দিন</h3>
         <input type="text" id="name" placeholder="আপনার নাম">
         <input type="tel" id="phone" placeholder="মোবাইল নম্বর">
         <textarea id="addr" placeholder="পুরো ঠিকানা" rows="3"></textarea>
         <button class="btn-order" id="finalOrderBtn" onclick="submitOrder()">অর্ডার কনফার্ম করুন</button>
-        <p onclick="closeModal()" style="color:red; cursor:pointer; margin-top:10px;">বাতিল করুন</p>
+        <p onclick="closeModal()" style="color:red; cursor:pointer; margin-top:10px;" id="cancelLabel">বাতিল করুন</p>
     </div>
 </div>
 
@@ -125,27 +128,50 @@
     const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
     let inventory = [];
     let cart = {};
+    let currentLang = 'bn';
+
+    const translations = {
+        en: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "Freshness from field to your door", search: "Search vegetables or fruits...", loading: "Loading Products...", cartHeader: "Your Cart 🛒", emptyCart: "Cart is empty.", total: "Total:", checkout: "Check Out (COD)", modalHeader: "Delivery Details", namePlace: "Your Name", phonePlace: "Mobile Number", addrPlace: "Full Address", confirmBtn: "Confirm Order", cancel: "Cancel", addBtn: "Add to Cart", addMore: "Add More", unitPer: "per" },
+        bn: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়", search: "সবজি বা ফল খুঁজুন...", loading: "প্রোডাক্ট লোড হচ্ছে...", cartHeader: "আপনার ব্যাগ 🛒", emptyCart: "ব্যাগ খালি।", total: "মোট:", checkout: "Check Out (COD)", modalHeader: "ডেলিভারি তথ্য দিন", namePlace: "আপনার নাম", phonePlace: "মোবাইল নম্বর", addrPlace: "পুরো ঠিকানা", confirmBtn: "অর্ডার কনফার্ম করুন", cancel: "বাতিল করুন", addBtn: "কার্টে যোগ করুন", addMore: "আরো যোগ করুন", unitPer: "প্রতি" }
+    };
+
+    function toggleLang() {
+        currentLang = currentLang === 'bn' ? 'en' : 'bn';
+        document.getElementById('langBtn').innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
+        updatePageText();
+        render();
+    }
+
+    function updatePageText() {
+        const t = translations[currentLang];
+        document.getElementById('heroTitle').innerText = t.heroTitle;
+        document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+        document.getElementById('search').placeholder = t.search;
+        document.getElementById('cartHeader').innerText = t.cartHeader;
+        document.getElementById('totalLabel').innerText = t.total;
+        document.getElementById('checkout-btn').innerText = t.checkout;
+        document.getElementById('modalHeader').innerText = t.modalHeader;
+        document.getElementById('name').placeholder = t.namePlace;
+        document.getElementById('phone').placeholder = t.phonePlace;
+        document.getElementById('addr').placeholder = t.addrPlace;
+        document.getElementById('finalOrderBtn').innerText = t.confirmBtn;
+        document.getElementById('cancelLabel').innerText = t.cancel;
+    }
 
     async function load() {
         try {
             const r = await fetch(API);
             const data = await r.json();
-            // প্রতিটি প্রোডাক্টের জন্য ইউনিক আইডি নিশ্চিত করা হচ্ছে
-            inventory = data.map((item, index) => ({
-                ...item,
-                id: item.id || `prod_${index}`
-            }));
+            inventory = data.map((item, index) => ({ ...item, id: item.id || `prod_${index}` }));
             document.getElementById('loader').style.display = 'none';
             render();
-        } catch(e) { document.getElementById('loader').innerText = "লোড হয়নি।"; }
+        } catch(e) { document.getElementById('loader').innerText = "Load Failed!"; }
     }
 
     function render(data = inventory) {
         let h = '';
         data.forEach(p => {
             const q = cart[p.id]?.qty || 0;
-            
-            // MRP কাটা চিহ্ন লজিক
             let mrpMarkup = "";
             if(p.mrp && Number(p.mrp) > Number(p.price)) {
                 mrpMarkup = `<span class="mrp">₹${p.mrp}</span>`;
@@ -158,7 +184,7 @@
                     <div class="price-container">
                         ${mrpMarkup}
                         <span class="sale-price">₹${p.price}</span>
-                        <span class="unit-text">প্রতি ${p.unit}</span>
+                        <span class="unit-text">${translations[currentLang].unitPer} ${p.unit}</span>
                     </div>
                     <div class="qty-box">
                         <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
@@ -166,7 +192,7 @@
                         <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
                     </div>
                     <button class="btn-add" onclick="updateQty('${p.id}', 1)">
-                        ${q > 0 ? 'আরো যোগ করুন' : 'কার্টে যোগ করুন'}
+                        ${q > 0 ? translations[currentLang].addMore : translations[currentLang].addBtn}
                     </button>
                 </div>`;
         });
@@ -181,9 +207,8 @@
         }
         cart[id].qty += change;
         if (cart[id].qty <= 0) delete cart[id];
-        
         updateCart();
-        render(); // এটিই মেইন ফিক্স, যা স্ক্রিনে সংখ্যা আপডেট করবে
+        render();
     }
 
     function updateCart() {
@@ -197,7 +222,7 @@
                     <b>₹${s}</b>
                   </div>`;
         });
-        document.getElementById('cart-content').innerHTML = h || "ব্যাগ খালি।";
+        document.getElementById('cart-content').innerHTML = h || translations[currentLang].emptyCart;
         document.getElementById('total-val').innerText = "₹" + total;
         document.getElementById('badge').innerText = count;
         document.getElementById('checkout-btn').style.display = total > 0 ? 'block' : 'none';
@@ -216,11 +241,7 @@
         const p = document.getElementById('phone').value.trim();
         const a = document.getElementById('addr').value.trim();
         if(!n || !p || !a) return alert("তথ্য দিন!");
-
-        const btn = document.getElementById('finalOrderBtn');
-        btn.innerText = "অর্ডার হচ্ছে...";
-        btn.disabled = true;
-
+        
         const order = {
             name: n, phone: p, address: a,
             items: Object.values(cart).map(i => `${i.name} (${i.qty} ${i.unit})`).join(", "),
@@ -229,10 +250,9 @@
 
         try {
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify(order) });
-            alert("অর্ডার সফল হয়েছে!");
+            alert(currentLang === 'bn' ? "অর্ডার সফল!" : "Order Successful!");
             cart = {}; updateCart(); closeModal(); toggleCart(); render();
-        } catch(e) { alert("সমস্যা হয়েছে!"); }
-        finally { btn.innerText = "অর্ডার কনফার্ম করুন"; btn.disabled = false; }
+        } catch(e) { alert("Error!"); }
     }
 
     load();
