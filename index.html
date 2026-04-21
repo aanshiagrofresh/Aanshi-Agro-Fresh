@@ -6,45 +6,95 @@
     <title>Aanshi Agro Fresh</title>
     <style>
         :root { --primary: #2e7d32; --accent: #ffa41c; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
-        .hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=1000'); background-size: cover; height: 35vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
-        .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; }
-        .search-box { width: 90%; max-width: 500px; padding: 12px; border-radius: 25px; border: none; display: block; margin: auto; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; position: relative; padding-bottom: 10px; }
-        .card img { width: 100%; height: 130px; object-fit: cover; }
-        .discount-tag { position: absolute; top: 5px; left: 5px; background: #d32f2f; color: white; padding: 3px 7px; border-radius: 5px; font-size: 11px; font-weight: bold; }
-        .price-now { color: #b12704; font-weight: bold; font-size: 18px; }
-        .price-was { text-decoration: line-through; color: #777; font-size: 13px; margin-left: 5px; }
-        .qty-controls { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 10px 0; }
-        .qty-btn { background: #eee; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 18px; }
-        .add-btn { background: var(--accent); color: white; border: none; padding: 10px; border-radius: 5px; width: 90%; font-weight: bold; cursor: pointer; }
-        .floating-cart { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1500; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .badge { position: absolute; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; }
-        .cart-panel { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: white; z-index: 2000; transition: 0.3s; padding: 20px; box-shadow: -5px 0 10px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .cart-panel.active { right: 0; }
-        @media (max-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
+
+        /* Header & Hero - প্রথম ডিজাইনের মতো সুন্দর */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200');
+            background-size: cover; background-position: center; height: 300px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center;
+        }
+        .hero h1 { font-size: 3rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+
+        .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 15px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .search-box { width: 90%; max-width: 600px; padding: 12px 20px; border-radius: 30px; border: none; font-size: 16px; outline: none; display: block; margin: auto; }
+
+        .container { max-width: 1200px; margin: 30px auto; display: flex; flex-wrap: wrap; gap: 20px; padding: 0 15px; }
+        .products-grid { flex: 3; min-width: 300px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+
+        /* Product Cards */
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; position: relative; border: 1px solid #eee; text-align: center; }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .discount-tag { position: absolute; top: 10px; left: 10px; background: #e62117; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        .card-info { padding: 15px; }
+        .price-now { color: var(--primary); font-weight: bold; font-size: 20px; }
+        .price-was { text-decoration: line-through; color: #888; font-size: 14px; margin-left: 8px; }
+
+        .qty-controls { display: flex; align-items: center; justify-content: center; margin: 10px 0; gap: 15px; }
+        .qty-btn { background: #f0f0f0; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 18px; }
+        .add-btn { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 16px; cursor: pointer; }
+
+        /* Sidebar Cart */
+        .cart-sidebar { flex: 1; min-width: 320px; background: white; padding: 25px; border-radius: 15px; height: fit-content; position: sticky; top: 100px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); }
+        
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal-content { background: white; width: 90%; max-width: 450px; margin: 10% auto; padding: 30px; border-radius: 20px; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .cart-sidebar { position: static; width: 100%; margin-top: 20px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="hero"><h1>Aanshi Agro Fresh 🥬</h1><p>তাজা সবজি সরাসরি আপনার ঘরে</p></div>
-<div class="nav-sticky"><input type="text" class="search-box" id="search" placeholder="খুঁজুন..." onkeyup="search()"></div>
-<div class="container"><div class="grid" id="display"></div></div>
-<div class="floating-cart" onclick="toggleCart()">🛒<div class="badge" id="badge">0</div></div>
+<div class="hero">
+    <h1>Aanshi Agro Fresh 🥬</h1>
+    <p>Freshness Guaranteed from Field to Table</p>
+</div>
 
-<div class="cart-panel" id="cartPanel">
-    <h3>আপনার কার্ট 🛒</h3><hr>
-    <div id="cart-content" style="height:65vh; overflow-y:auto;">ব্যাগ খালি।</div><hr>
-    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 18px;"><span>মোট:</span><span id="total-val">₹0</span></div>
-    <button class="add-btn" style="margin-top:20px;" onclick="openCheckout()">Order Now (COD)</button>
-    <p onclick="toggleCart()" style="text-align:center; color:red; cursor:pointer;">বন্ধ করুন</p>
+<div class="nav-sticky">
+    <input type="text" class="search-box" id="search" placeholder="সবজি বা ফল খুঁজুন..." onkeyup="search()">
+</div>
+
+<div class="container">
+    <div class="products-grid">
+        <div id="loader" style="text-align:center; padding:20px;">প্রোডাক্ট লোড হচ্ছে...</div>
+        <div class="grid" id="display"></div>
+    </div>
+
+    <div class="cart-sidebar">
+        <h2 style="margin-top:0;">আপনার ব্যাগ 🛒</h2>
+        <div id="cart-items" style="color: #666; margin-bottom: 20px;">ব্যাগ খালি।</div>
+        <hr>
+        <div style="display:flex; justify-content:space-between; font-size:22px; font-weight:bold; color: var(--primary);">
+            <span>মোট মূল্য:</span>
+            <span id="total-val">₹0</span>
+        </div>
+        <button class="add-btn" id="checkout-btn" style="margin-top:20px; display:none;" onclick="openModal()">Order Now (COD)</button>
+    </div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2 style="margin-top:0; color: var(--primary);">অর্ডার কনফার্ম করুন</h2>
+        <input type="text" id="name" placeholder="আপনার নাম">
+        <input type="tel" id="phone" placeholder="মোবাইল নম্বর">
+        <textarea id="addr" placeholder="পুরো ঠিকানা (পাড়া, ব্লক, পিন কোড)" rows="3"></textarea>
+        <button class="add-btn" onclick="submitOrder()">Confirm Order</button>
+        <p onclick="closeModal()" style="text-align:center; color:red; cursor:pointer; margin-top:15px;">বাতিল করুন</p>
+    </div>
 </div>
 
 <script>
     const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
-    let inventory = [], cart = {};
+    let inventory = [];
+    let cart = {};
 
     async function load() {
         const r = await fetch(API);
@@ -52,8 +102,10 @@
         inventory = data.map(p => ({
             ...p,
             price: Number(p.price),
-            mrp: Number(p.mrp || p.price)
+            mrp: Number(p.mrp || p.price),
+            id: String(p.id)
         }));
+        document.getElementById('loader').style.display = 'none';
         render();
     }
 
@@ -63,19 +115,21 @@
             let q = cart[p.id] ? cart[p.id].qty : 0;
             let disc = Math.round(((p.mrp - p.price) / p.mrp) * 100);
             h += `<div class="card">
-                ${disc > 0 ? `<div class="discount-tag">${disc}% ছাড়</div>` : ''}
-                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150'">
-                <h4 style="margin:10px 0 5px;">${p.name}</h4>
-                <div style="margin-bottom:10px;">
-                    <span class="price-now">₹${p.price}</span>
-                    ${p.mrp > p.price ? `<span class="price-was">₹${p.mrp}</span>` : ''}
+                ${disc > 0 ? `<div class="discount-tag">${disc}% ছাড়</div>` : ''}
+                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200'">
+                <div class="card-info">
+                    <h3 style="margin:0 0 10px; font-size:18px;">${p.name}</h3>
+                    <div style="margin-bottom:10px;">
+                        <span class="price-now">₹${p.price}</span>
+                        ${p.mrp > p.price ? `<span class="price-was">₹${p.mrp}</span>` : ''}
+                    </div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
+                        <b style="font-size:20px;">${q}</b>
+                        <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
+                    </div>
+                    <button class="add-btn" onclick="updateQty('${p.id}', 1)">কার্টে যোগ করুন</button>
                 </div>
-                <div class="qty-controls">
-                    <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
-                    <b style="font-size:18px;">${q}</b>
-                    <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
-                </div>
-                <button class="add-btn" onclick="updateQty('${p.id}', 1)">Add to Cart</button>
             </div>`;
         });
         document.getElementById('display').innerHTML = h;
@@ -86,9 +140,11 @@
             let p = inventory.find(x => x.id === id);
             cart[id] = { ...p, qty: 0 };
         }
-        // গাণিতিক যোগ নিশ্চিত করতে Number() এবং Math.max ব্যবহার
+        
+        // সঠিক গাণিতিক যোগ নিশ্চিত করার জন্য Number ব্যবহার
         let current = Number(cart[id].qty);
-        cart[id].qty = Math.max(0, current + Number(change));
+        let updated = current + Number(change);
+        cart[id].qty = Math.max(0, updated);
 
         if (cart[id].qty <= 0) delete cart[id];
         updateUI();
@@ -96,25 +152,36 @@
     }
 
     function updateUI() {
-        let h = '', total = 0, count = 0;
+        let h = '', total = 0;
         Object.values(cart).forEach(i => {
             let sub = i.price * i.qty;
             total += sub;
-            count += i.qty;
-            h += `<div style="margin-bottom:10px;"><b>${i.name}</b><br>${i.qty} x ₹${i.price} = ₹${sub}</div><hr>`;
+            h += `<div style="margin-bottom:12px;"><b>${i.name}</b><br>${i.qty} ${i.unit} x ₹${i.price} = ₹${sub}</div><hr>`;
         });
-        document.getElementById('cart-content').innerHTML = h || "ব্যাগ খালি।";
+        document.getElementById('cart-items').innerHTML = h || "ব্যাগ খালি।";
         document.getElementById('total-val').innerText = "₹" + total;
-        document.getElementById('badge').innerText = count;
+        document.getElementById('checkout-btn').style.display = total > 0 ? 'block' : 'none';
     }
+
+    function openModal() { document.getElementById('modal').style.display = 'block'; }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    function search() { render(inventory.filter(p => p.name.toLowerCase().includes(document.getElementById('search').value.toLowerCase()))); }
 
     async function submitOrder() {
-        // এই ফাংশনটি আগের মতোই থাকবে, শুধু ডাটা পাঠানোর সময় String conversion বন্ধ করে দেওয়া হয়েছে।
-        // ... (আগের submitOrder কোড)
+        const n = document.getElementById('name').value, ph = document.getElementById('phone').value, ad = document.getElementById('addr').value;
+        if(!n || !ph || !ad) return alert("দয়া করে সব তথ্য পূরণ করুন!");
+
+        const order = {
+            name: n, phone: ph, address: ad,
+            items: Object.values(cart).map(i => `${i.name} (${i.qty}${i.unit})`).join(", "),
+            total: document.getElementById('total-val').innerText.replace('₹','')
+        };
+
+        await fetch(API, { method: 'POST', body: JSON.stringify(order) });
+        alert("অর্ডার সফল হয়েছে!");
+        cart = {}; updateUI(); closeModal(); render();
     }
 
-    function toggleCart() { document.getElementById('cartPanel').classList.toggle('active'); }
-    function search() { render(inventory.filter(p => p.name.toLowerCase().includes(document.getElementById('search').value.toLowerCase()))); }
     load();
 </script>
 </body>
