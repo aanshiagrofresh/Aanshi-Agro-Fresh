@@ -94,81 +94,124 @@ const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Men
 
 let inventory = [];
 let cart = {};
+let lang = 'bn';
 
-// Load Products
+// LOAD
 async function load() {
-    let r = await fetch(API);
-    inventory = await r.json();
-    render();
+    try {
+        const r = await fetch(API);
+        inventory = await r.json();
+        document.getElementById('loader').style.display = 'none';
+        render();
+    } catch(e) {
+        document.getElementById('loader').innerText = "Error Loading Products";
+    }
 }
 
-function render() {
+// RENDER (✅ FIXED DISCOUNT SAFE)
+function render(data = inventory) {
     let h = '';
+    data.forEach(p => {
 
-    inventory.forEach(p => {
         h += `
         <div class="card">
-            <img src="${p.img}">
+            <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Agro+Fresh'">
             <h4>${p.name}</h4>
 
             <p class="price">
-                <span style="text-decoration:line-through;color:#888;">
-                    ₹${p.mrp}
-                </span>
-                <span style="color:green;font-weight:bold;">
-                    ₹${p.price}
-                </span>
-                <br>
-                <span style="color:red;">
-                    Save ₹${p.mrp - p.price}
-                </span> / ${p.unit}
+                ${p.mrp ? `<span style="text-decoration:line-through;color:#888;font-size:14px;">₹${p.mrp}</span>` : ""}
+                <span style="color: var(--primary); font-weight:bold;">₹${p.price}</span>
+                ${p.mrp ? `<br><span style="color:red;font-size:13px;">Save ₹${p.mrp - p.price}</span>` : ""}
+                / ${p.unit}
             </p>
 
-            <button onclick="addToCart(${p.id})">Add</button>
+            <div class="qty-box">
+                <button class="qty-btn" onclick="updateQty(${p.id}, -1)">-</button>
+                <span id="q-${p.id}">${cart[p.id]?.qty || 0}</span>
+                <button class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
+            </div>
+
+            <button class="btn-add" onclick="updateQty(${p.id}, 1)">
+                Add to Cart
+            </button>
         </div>`;
     });
 
     document.getElementById('product-display').innerHTML = h;
 }
 
-// Add to cart
-function addToCart(id) {
-    if(!cart[id]) cart[id] = 0;
-    cart[id]++;
+// QTY
+function updateQty(id, change) {
+    if (!cart[id]) {
+        const p = inventory.find(x => x.id == id);
+        cart[id] = { ...p, qty: 0 };
+    }
+
+    cart[id].qty += change;
+
+    if (cart[id].qty <= 0) delete cart[id];
+
+    if(document.getElementById(`q-${id}`))
+        document.getElementById(`q-${id}`).innerText = cart[id]?.qty || 0;
+
+    updateCart();
 }
 
-// Open Modal
+// CART
+function updateCart() {
+    let h = '';
+    let totalVal = 0;
+    let count = 0;
+
+    Object.values(cart).forEach(i => {
+        let s = i.price * i.qty;
+        totalVal += s;
+        count += i.qty;
+
+        h += `<div style="margin-bottom:15px;">
+                <b>${i.name}</b><br>
+                ${i.qty} x ₹${i.price} = ₹${s}
+              </div>`;
+    });
+
+    document.getElementById('cart-content').innerHTML = h || "Cart empty";
+    document.getElementById('total-val').innerText = "₹" + totalVal;
+    document.getElementById('badge').innerText = count;
+    document.getElementById('checkout-btn').style.display = totalVal > 0 ? 'block' : 'none';
+}
+
+// MODAL
 function openModal() {
     document.getElementById('modal').style.display = 'block';
 }
 
-// Submit Order (FIXED)
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+// ✅ FINAL ORDER FIX (NO 11/21 BUG)
 async function submitOrder() {
 
     const n = document.getElementById('name').value;
     const p = document.getElementById('phone').value;
     const a = document.getElementById('addr').value;
 
-    if(!n || !p || !a) {
-        alert("Fill all details!");
-        return;
-    }
+    if(!n || !p || !a) return alert("Fill all details!");
 
     let totalVal = 0;
 
-    const itemsArr = Object.entries(cart).map(([id, qty]) => {
-        let item = inventory.find(x => x.id == id);
-        let subtotal = item.price * qty;
+    const itemsArr = Object.values(cart).map(i => {
+        let subtotal = i.price * i.qty;
         totalVal += subtotal;
 
-        return `${item.name} - ${qty} ${item.unit} = ₹${subtotal}`;
+        return `${i.name} (${i.qty} ${i.unit}) = ₹${subtotal}`;
     });
 
     const order = {
         name: n,
         phone: p,
         address: a,
-        items: itemsArr.join("\n"),
+        items: itemsArr.join(", "),
         total: totalVal
     };
 
@@ -180,7 +223,9 @@ async function submitOrder() {
     alert("Order Placed Successfully!");
 
     cart = {};
-    document.getElementById('modal').style.display = 'none';
+    updateCart();
+    closeModal();
+    render();
 }
 
 load();
