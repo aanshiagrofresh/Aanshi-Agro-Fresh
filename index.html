@@ -5,56 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aanshi Agro Fresh - Freshness Delivered</title>
     <style>
-        :root {
-            --primary: #2e7d32;
-            --accent: #ffa41c;
-            --white: #ffffff;
-            --bg: #f4f7f6;
-        }
-
+        :root { --primary: #2e7d32; --accent: #ffa41c; --white: #ffffff; --bg: #f4f7f6; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center; height: 35vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; padding: 20px;
-        }
-
-        .brand-logo {
-            width: 100px; height: 100px;
-            background: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 10px; border: 3px solid var(--accent);
-            overflow: hidden;
-        }
+        
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; height: 30vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 20px; }
+        .brand-logo { width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border: 3px solid var(--accent); overflow: hidden; }
         .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Search Bar & Sticky Header */
         .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; }
         .search-box { width: 90%; max-width: 500px; padding: 12px 20px; border-radius: 30px; border: none; display: block; margin: auto; outline: none; }
 
-        /* Products Grid */
         .container { max-width: 1200px; margin: 20px auto; padding: 0 10px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
 
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; display: flex; flex-direction: column; padding-bottom: 12px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; display: flex; flex-direction: column; padding-bottom: 12px; transition: 0.3s; }
         .card img { width: 100%; height: 130px; object-fit: cover; }
         .card h4 { margin: 8px 5px; font-size: 15px; height: 38px; overflow: hidden; }
 
-        /* Price Area - MRP Strike-through */
-        .price-container { margin: 5px 0 10px 0; }
-        .mrp { color: #888; text-decoration: line-through; font-size: 13px; margin-right: 5px; }
-        .sale-price { color: var(--primary); font-weight: bold; font-size: 18px; }
-        .discount-tag { background: #fff3e0; color: #e65100; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: bold; display: inline-block; margin-top: 4px; }
+        /* MRP CSS */
+        .price-container { margin: 5px 0 10px 0; min-height: 50px; }
+        .mrp { color: #999; text-decoration: line-through; font-size: 14px; margin-right: 5px; display: inline-block; }
+        .sale-price { color: var(--primary); font-weight: bold; font-size: 18px; display: inline-block; }
+        .discount-tag { background: #ffeb3b; color: #000; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: bold; display: inline-block; margin-top: 5px; }
 
-        /* Qty Controls */
-        .qty-box { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 10px; }
-        .qty-btn { background: #f0f0f0; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; font-weight: bold; }
+        .qty-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; }
+        .qty-btn { background: #f0f0f0; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         .btn-add { background: var(--accent); color: #fff; border: none; padding: 10px; width: 90%; border-radius: 20px; font-weight: bold; cursor: pointer; align-self: center; }
 
-        /* Cart Badge & Modal & Others */
         .floating-cart { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1500; }
         .cart-badge { position: absolute; top: 0; right: 0; background: red; color: white; border-radius: 50%; padding: 4px 8px; font-size: 12px; }
         
@@ -68,18 +45,13 @@
         input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
         .btn-order { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
 
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
-            .cart-panel { width: 100%; right: -100%; }
-        }
+        @media (max-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } .cart-panel { width: 100%; right: -100%; } }
     </style>
 </head>
 <body>
 
 <div class="hero">
-    <div class="brand-logo">
-        <img src="logo.jpg.jpge" alt="Logo">
-    </div>
+    <div class="brand-logo"><img src="logo.jpg.jpge" alt="Logo"></div>
     <h1>Aanshi Agro Fresh 🥬</h1>
     <p>চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
 </div>
@@ -133,75 +105,85 @@
             inventory = await r.json();
             document.getElementById('loader').style.display = 'none';
             render();
-        } catch(e) { 
-            document.getElementById('loader').innerText = "নেটওয়ার্ক সমস্যা! পরে চেষ্টা করুন।"; 
-        }
+        } catch(e) { document.getElementById('loader').innerText = "ডাটা লোড করতে সমস্যা হচ্ছে।"; }
     }
 
     function render(data = inventory) {
         let h = '';
         data.forEach(p => {
-            // MRP এবং Sale Price লজিক
-            let mrpMarkup = "";
-            let discountMarkup = "";
+            const currentQty = cart[p.id]?.qty || 0;
             
-            // যদি MRP (Column C) সেল প্রাইস (Column D) এর থেকে বেশি হয়
-            if(p.mrp && Number(p.mrp) > Number(p.price)) {
-                mrpMarkup = `<span class="mrp">₹${p.mrp}</span>`;
-                let disc = Math.round(((p.mrp - p.price) / p.mrp) * 100);
-                discountMarkup = `<br><span class="discount-tag">${disc}% ছাড়</span>`;
+            // MRP ও Discount লজিক
+            let mrpHtml = "";
+            let discHtml = "";
+            let sellPrice = Number(p.price);
+            let marketPrice = Number(p.mrp);
+
+            if(marketPrice > sellPrice) {
+                mrpHtml = `<span class="mrp">₹${marketPrice}</span>`;
+                let disc = Math.round(((marketPrice - sellPrice) / marketPrice) * 100);
+                discHtml = `<br><span class="discount-tag">${disc}% ছাড়</span>`;
             }
 
             h += `
                 <div class="card">
-                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Fresh+Agro'">
+                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Fresh'">
                     <h4>${p.name}</h4>
                     <div class="price-container">
-                        ${mrpMarkup}
-                        <span class="sale-price">₹${p.price}</span>
-                        ${discountMarkup}
+                        ${mrpHtml}
+                        <span class="sale-price">₹${sellPrice}</span>
+                        ${discHtml}
                         <div style="font-size: 12px; color: #666; margin-top:4px;">প্রতি ${p.unit}</div>
                     </div>
                     <div class="qty-box">
-                        <button class="qty-btn" onclick="updateQty(${p.id}, -1)">-</button>
-                        <span id="q-${p.id}" style="font-weight:bold;">${cart[p.id]?.qty || 0}</span>
-                        <button class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
+                        <button class="qty-btn" onclick="event.stopPropagation(); updateQty(${p.id}, -1)">-</button>
+                        <span style="font-weight:bold; width: 20px;">${currentQty}</span>
+                        <button class="qty-btn" onclick="event.stopPropagation(); updateQty(${p.id}, 1)">+</button>
                     </div>
                     <button class="btn-add" onclick="updateQty(${p.id}, 1)">
-                        ${cart[p.id] ? 'আরো যোগ করুন' : 'কার্টে যোগ করুন'}
+                        ${currentQty > 0 ? 'আরো যোগ করুন' : 'কার্টে যোগ করুন'}
                     </button>
                 </div>`;
         });
-        document.getElementById('product-display').innerHTML = h || "কোনো প্রোডাক্ট পাওয়া যায়নি।";
+        document.getElementById('product-display').innerHTML = h;
     }
 
     function updateQty(id, change) {
         if (!cart[id]) {
-            const p = inventory.find(x => x.id == id);
-            cart[id] = { ...p, qty: 0 };
+            const product = inventory.find(x => x.id == id);
+            if(!product) return;
+            cart[id] = { ...product, qty: 0 };
         }
+        
         cart[id].qty += change;
         if (cart[id].qty <= 0) delete cart[id];
         
         updateCart();
-        render(); // বাটন টেক্সট এবং সংখ্যা তৎক্ষণাৎ আপডেট করার জন্য
+        render(); // এটি নিশ্চিত করে যে স্ক্রিনে সংখ্যা আপডেট হয়েছে
     }
 
     function updateCart() {
-        let h = ''; let totalVal = 0; let count = 0;
-        Object.values(cart).forEach(i => {
-            let s = i.price * i.qty;
-            totalVal += s;
-            count += i.qty;
-            h += `<div style="margin-bottom:12px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
-                    <div><b>${i.name}</b><br><small>${i.qty} x ₹${i.price}</small></div>
-                    <div style="font-weight:bold;">₹${s}</div>
-                  </div>`;
-        });
-        document.getElementById('cart-content').innerHTML = h || "ব্যাগ একদম খালি।";
-        document.getElementById('total-val').innerText = "₹" + totalVal;
+        let h = ''; let total = 0; let count = 0;
+        const items = Object.values(cart);
+        
+        if(items.length === 0) {
+            h = "ব্যাগ খালি।";
+        } else {
+            items.forEach(i => {
+                let subtotal = i.price * i.qty;
+                total += subtotal;
+                count += i.qty;
+                h += `<div style="margin-bottom:12px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; justify-content:space-between;">
+                        <div><b>${i.name}</b><br><small>${i.qty} x ₹${i.price}</small></div>
+                        <div style="font-weight:bold;">₹${subtotal}</div>
+                      </div>`;
+            });
+        }
+        
+        document.getElementById('cart-content').innerHTML = h;
+        document.getElementById('total-val').innerText = "₹" + total;
         document.getElementById('badge').innerText = count;
-        document.getElementById('checkout-btn').style.display = totalVal > 0 ? 'block' : 'none';
+        document.getElementById('checkout-btn').style.display = total > 0 ? 'block' : 'none';
     }
 
     function toggleCart() { document.getElementById('cartPanel').classList.toggle('active'); }
@@ -216,8 +198,7 @@
         const n = document.getElementById('name').value.trim();
         const p = document.getElementById('phone').value.trim();
         const a = document.getElementById('addr').value.trim();
-
-        if(!n || !p || !a) return alert("দয়া করে সব তথ্য পূরণ করুন!");
+        if(!n || !p || !a) return alert("সব তথ্য দিন!");
 
         const btn = document.getElementById('finalOrderBtn');
         btn.innerText = "অর্ডার হচ্ছে...";
@@ -231,14 +212,10 @@
 
         try {
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify(order) });
-            alert("ধন্যবাদ! আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে।");
-            cart = {}; updateCart(); closeModal(); if(document.getElementById('cartPanel').classList.contains('active')) toggleCart(); render();
-        } catch(e) {
-            alert("অর্ডার পাঠাতে সমস্যা হয়েছে।");
-        } finally {
-            btn.innerText = "অর্ডার কনফার্ম করুন";
-            btn.disabled = false;
-        }
+            alert("অর্ডার সফল হয়েছে!");
+            cart = {}; updateCart(); closeModal(); toggleCart(); render();
+        } catch(e) { alert("সমস্যা হয়েছে!"); }
+        finally { btn.innerText = "অর্ডার কনফার্ম করুন"; btn.disabled = false; }
     }
 
     load();
