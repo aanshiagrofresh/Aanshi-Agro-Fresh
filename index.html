@@ -21,23 +21,22 @@
         /* Hero Section */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center; height: 55vh;
+            background-size: cover; background-position: center; height: 45vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; padding: 20px;
         }
 
-        /* Logo Styling */
         .brand-logo {
-            width: 150px; height: 150px;
+            width: 120px; height: 120px;
             background: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 15px; border: 5px solid var(--accent);
+            margin-bottom: 15px; border: 4px solid var(--accent);
             overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
 
-        .hero h1 { font-size: 2.5rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.1rem; margin-top: 10px; opacity: 0.9; }
+        .hero h1 { font-size: 2.2rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1rem; margin-top: 10px; opacity: 0.9; }
 
         /* Search Bar */
         .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -45,34 +44,40 @@
 
         /* Products Grid */
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 15px; }
 
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 150px; object-fit: cover; }
-        .card h4 { margin: 10px 5px; font-size: 15px; height: 40px; overflow: hidden; padding: 0 5px; }
-        .price { color: var(--primary); font-weight: bold; font-size: 18px; margin-bottom: 10px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; transition: 0.3s; padding-bottom: 10px; }
+        .card:hover { transform: translateY(-3px); }
+        .card img { width: 100%; height: 140px; object-fit: cover; }
+        .card h4 { margin: 10px 5px; font-size: 15px; height: 35px; overflow: hidden; padding: 0 5px; }
+        
+        /* Price Styling */
+        .price-container { margin-bottom: 10px; }
+        .mrp { color: #888; text-decoration: line-through; font-size: 13px; margin-right: 5px; }
+        .sale-price { color: var(--primary); font-weight: bold; font-size: 18px; }
+        .discount-tag { background: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
 
         /* Controls */
         .qty-box { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
-        .qty-btn { background: #eee; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 18px; }
-        .btn-add { background: var(--accent); color: white; border: none; padding: 10px; width: 90%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+        .qty-btn { background: #eee; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 18px; }
+        .btn-add { background: var(--accent); color: white; border: none; padding: 10px; width: 90%; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-add:active { transform: scale(0.95); }
 
-        /* Floating Cart Button */
+        /* Floating Cart */
         .floating-cart {
             position: fixed; bottom: 30px; right: 30px;
             background: var(--primary); color: white;
-            width: 65px; height: 65px; border-radius: 50%;
+            width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 1500;
         }
         .cart-badge {
-            position: absolute; top: -5px; right: -5px;
-            background: red; color: white; border-radius: 50%;
-            padding: 5px 10px; font-size: 12px; font-weight: bold;
+            position: absolute; top: -2px; right: -2px;
+            background: #ff3b30; color: white; border-radius: 50%;
+            padding: 4px 8px; font-size: 12px; font-weight: bold;
         }
 
-        /* Sidebar Cart Panel */
+        /* Cart Panel */
         .cart-panel {
             position: fixed; top: 0; right: -400px; width: 350px; height: 100%;
             background: white; z-index: 2000; transition: 0.4s;
@@ -81,10 +86,9 @@
         }
         .cart-panel.active { right: 0; }
         .close-cart { font-size: 30px; cursor: pointer; color: #666; position: absolute; top: 15px; left: 15px; }
-        
         #cart-content { flex: 1; overflow-y: auto; margin-top: 40px; }
 
-        /* Modal Checkout */
+        /* Modal */
         .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
         .modal-content { background: white; width: 90%; max-width: 400px; margin: 15% auto; padding: 25px; border-radius: 15px; text-align: center; }
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
@@ -92,8 +96,7 @@
 
         @media (max-width: 768px) {
             .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .hero h1 { font-size: 1.8rem; }
-            .cart-panel { width: 300px; }
+            .cart-panel { width: 100%; right: -100%; }
         }
     </style>
 </head>
@@ -105,7 +108,7 @@
 
 <div class="hero">
     <div class="brand-logo">
-        <img src="https://via.placeholder.com/150?text=LOGO" alt="Logo">
+        <img src="logo.jpg.jpge" alt="Logo">
     </div>
     <h1 id="heroTitle">Aanshi Agro Fresh 🥬</h1>
     <p id="heroSubtitle">চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
@@ -116,7 +119,7 @@
 </div>
 
 <div class="container">
-    <div id="loader" style="text-align:center; font-weight:bold;">প্রোডাক্ট লোড হচ্ছে...</div>
+    <div id="loader" style="text-align:center; font-weight:bold; margin-top: 50px;">প্রোডাক্ট লোড হচ্ছে...</div>
     <div class="grid" id="product-display"></div>
 </div>
 
@@ -172,7 +175,7 @@
             cancelBtn: "Cancel",
             addBtn: "Add to Cart",
             loading: "Loading Products...",
-            success: "Order Placed Successfully! Sent to Telegram and Sheet."
+            success: "Order Placed Successfully!"
         },
         bn: {
             heroTitle: "Aanshi Agro Fresh 🥬",
@@ -190,7 +193,7 @@
             cancelBtn: "বাতিল করুন",
             addBtn: "কার্টে যোগ করুন",
             loading: "প্রোডাক্ট লোড হচ্ছে...",
-            success: "অর্ডার সফল হয়েছে! টেলিগ্রাম এবং গুগল শিটে পাঠানো হয়েছে।"
+            success: "অর্ডার সফল হয়েছে!"
         }
     };
 
@@ -223,26 +226,42 @@
             inventory = await r.json();
             document.getElementById('loader').style.display = 'none';
             render();
-        } catch(e) { document.getElementById('loader').innerText = "Error Loading Products"; }
+        } catch(e) { 
+            document.getElementById('loader').innerText = "Error Loading Products. Please check your API."; 
+        }
     }
 
     function render(data = inventory) {
         let h = '';
         data.forEach(p => {
+            // MRP (Column C) এবং Sale Price (Column D) এর লজিক
+            let discountTag = "";
+            if(p.mrp && p.mrp > p.price) {
+                let disc = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+                discountTag = `<span class="discount-tag">${disc}% OFF</span>`;
+            }
+
             h += `
                 <div class="card">
                     <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Agro+Fresh'">
                     <h4>${p.name}</h4>
-                    <p class="price">₹${p.price} / ${p.unit}</p>
+                    <div class="price-container">
+                        ${p.mrp ? `<span class="mrp">₹${p.mrp}</span>` : ''}
+                        <span class="sale-price">₹${p.price}</span>
+                        ${discountTag}
+                        <div style="font-size: 12px; color: #777;">প্রতি ${p.unit}</div>
+                    </div>
                     <div class="qty-box">
                         <button class="qty-btn" onclick="updateQty(${p.id}, -1)">-</button>
-                        <span id="q-${p.id}">${cart[p.id]?.qty || 0}</span>
+                        <span id="q-${p.id}" style="font-weight:bold;">${cart[p.id]?.qty || 0}</span>
                         <button class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
                     </div>
-                    <button class="btn-add" onclick="updateQty(${p.id}, 1)">${translations[lang].addBtn}</button>
+                    <button class="btn-add" onclick="updateQty(${p.id}, 1)">
+                        ${cart[p.id] ? (lang === 'bn' ? 'আরো যোগ করুন' : 'Add More') : translations[lang].addBtn}
+                    </button>
                 </div>`;
         });
-        document.getElementById('product-display').innerHTML = h;
+        document.getElementById('product-display').innerHTML = h || "No products found.";
     }
 
     function updateQty(id, change) {
@@ -255,6 +274,7 @@
         
         if(document.getElementById(`q-${id}`)) document.getElementById(`q-${id}`).innerText = cart[id]?.qty || 0;
         updateCart();
+        render(); // বাটন টেক্সট আপডেট করার জন্য রেন্ডার কল করা হয়েছে
     }
 
     function updateCart() {
@@ -290,21 +310,32 @@
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
     async function submitOrder() {
-        const n = document.getElementById('name').value;
-        const p = document.getElementById('phone').value;
-        const a = document.getElementById('addr').value;
+        const n = document.getElementById('name').value.trim();
+        const p = document.getElementById('phone').value.trim();
+        const a = document.getElementById('addr').value.trim();
 
-        if(!n || !p || !a) return alert("তথ্য দিন / Fill all details!");
+        if(!n || !p || !a) return alert("দয়া করে সব তথ্য দিন!");
+
+        const btn = document.getElementById('finalOrderBtn');
+        btn.innerText = "অর্ডার পাঠানো হচ্ছে...";
+        btn.disabled = true;
 
         const order = {
             name: n, phone: p, address: a,
-            items: Object.values(cart).map(i => `${i.name} (${i.qty}${i.unit})`).join(", "),
-            total: document.getElementById('total-val').innerText.replace('₹','')
+            items: Object.values(cart).map(i => `${i.name} (${i.qty} ${i.unit})`).join(", "),
+            total: document.getElementById('total-val').innerText
         };
 
-        await fetch(API, { method: 'POST', body: JSON.stringify(order) });
-        alert(translations[lang].success);
-        cart = {}; updateCart(); closeModal(); toggleCart(); render();
+        try {
+            await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify(order) });
+            alert(translations[lang].success);
+            cart = {}; updateCart(); closeModal(); toggleCart(); render();
+        } catch(e) {
+            alert("Error sending order.");
+        } finally {
+            btn.innerText = translations[lang].orderBtn;
+            btn.disabled = false;
+        }
     }
 
     load();
