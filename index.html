@@ -151,8 +151,7 @@
 </div>
 
 <script>
-    // এখানে আপনার নতুন Deployment URL টি বসান
-    const API = "এখানে_আপনার_নতুন_স্ক্রিপ্ট_লিঙ্ক_দিন"; 
+    const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
     let inventory = [];
     let cart = {};
     let currentLang = 'bn';
@@ -198,8 +197,14 @@
 
     function render(data = inventory) {
         let h = '';
-        // Status কলামে 'hide' থাকলে ফিল্টার হবে
-        const visibleData = data.filter(p => !p.status || p.status.toString().toLowerCase().trim() !== 'hide');
+        // --- স্ট্যাটাস ফিল্টার লজিক এখানে ---
+        const visibleData = data.filter(p => {
+            if (p.status) {
+                // যদি status কলামে 'hide' (যে কোনো ভাবে) লেখা থাকে তবে দেখাবে না
+                return p.status.toString().toLowerCase().trim() !== 'hide';
+            }
+            return true; // ফাঁকা থাকলে দেখাবে
+        });
         
         visibleData.forEach(p => {
             const q = cart[p.id]?.qty || 0;
