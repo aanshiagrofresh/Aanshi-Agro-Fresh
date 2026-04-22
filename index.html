@@ -72,6 +72,13 @@
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; outline-color: var(--primary); }
         .btn-order { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
+        /* About Us (Footer) Section */
+        .footer { background: #333; color: white; padding: 30px 20px; text-align: center; margin-top: 50px; }
+        .footer h3 { color: var(--accent); margin-bottom: 15px; }
+        .footer p { margin: 5px 0; font-size: 14px; color: #ccc; }
+        .whatsapp-btn { display: inline-flex; align-items: center; background: #25D366; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .whatsapp-btn img { width: 20px; margin-right: 8px; }
+
         @media (max-width: 768px) {
             .cart-panel { width: 100%; right: -100%; }
         }
@@ -98,6 +105,19 @@
 <div class="container">
     <div id="loader" style="text-align:center; font-weight:bold; margin-top: 50px;">প্রোডাক্ট লোড হচ্ছে...</div>
     <div class="grid" id="product-display"></div>
+</div>
+
+<div class="footer">
+    <h3 id="aboutHeader">About Us</h3>
+    <p><b>Name:</b> Aanshi Agro Fresh</p>
+    <p><b>Address:</b> Chandpara, North 24 Parganas, West Bengal</p>
+    <p><b>Mob no:</b> +91 8910083889</p>
+    <p><b>Mail id:</b> aanshiagrofresh@gmail.com</p>
+    
+    <a href="https://wa.me/918910083889" class="whatsapp-btn" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WA">
+        WhatsApp Now
+    </a>
 </div>
 
 <div class="floating-cart" onclick="toggleCart()">
@@ -136,8 +156,8 @@
     let currentLang = 'bn';
 
     const translations = {
-        en: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "Freshness from field to your door", search: "Search vegetables or fruits...", loading: "Loading Products...", cartHeader: "Your Cart 🛒", emptyCart: "Cart is empty.", total: "Total:", checkout: "Check Out (COD)", modalHeader: "Delivery Details", namePlace: "Your Name", phonePlace: "Mobile Number", addrPlace: "Full Address", confirmBtn: "Confirm Order", cancel: "Cancel", addBtn: "Add to Cart", addMore: "Add More", unitPer: "per", success: "Order Successful!" },
-        bn: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়", search: "সবজি বা ফল খুঁজুন...", loading: "প্রোডাক্ট লোড হচ্ছে...", cartHeader: "আপনার ব্যাগ 🛒", emptyCart: "ব্যাগ খালি।", total: "মোট:", checkout: "Check Out (COD)", modalHeader: "ডেলিভারি তথ্য দিন", namePlace: "আপনার নাম", phonePlace: "মোবাইল নম্বর", addrPlace: "পুরো ঠিকানা", confirmBtn: "অর্ডার কনফার্ম করুন", cancel: "বাতিল করুন", addBtn: "কার্টে যোগ করুন", addMore: "আরো যোগ করুন", unitPer: "প্রতি", success: "অর্ডার সফল হয়েছে!" }
+        en: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "Freshness from field to your door", search: "Search vegetables or fruits...", loading: "Loading Products...", cartHeader: "Your Cart 🛒", emptyCart: "Cart is empty.", total: "Total:", checkout: "Check Out (COD)", modalHeader: "Delivery Details", namePlace: "Your Name", phonePlace: "Mobile Number", addrPlace: "Full Address", confirmBtn: "Confirm Order", cancel: "Cancel", addBtn: "Add to Cart", addMore: "Add More", unitPer: "per", success: "Order Successful!", aboutTitle: "About Us" },
+        bn: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়", search: "সবজি বা ফল খুঁজুন...", loading: "প্রোডাক্ট লোড হচ্ছে...", cartHeader: "আপনার ব্যাগ 🛒", emptyCart: "ব্যাগ খালি।", total: "মোট:", checkout: "Check Out (COD)", modalHeader: "ডেলিভারি তথ্য দিন", namePlace: "আপনার নাম", phonePlace: "মোবাইল নম্বর", addrPlace: "পুরো ঠিকানা", confirmBtn: "অর্ডার কনফার্ম করুন", cancel: "বাতিল করুন", addBtn: "কার্টে যোগ করুন", addMore: "আরো যোগ করুন", unitPer: "প্রতি", success: "অর্ডার সফল হয়েছে!", aboutTitle: "আমাদের সম্পর্কে" }
     };
 
     function toggleLang() {
@@ -161,6 +181,7 @@
         document.getElementById('addr').placeholder = t.addrPlace;
         document.getElementById('finalOrderBtn').innerText = t.confirmBtn;
         document.getElementById('cancelLabel').innerText = t.cancel;
+        document.getElementById('aboutHeader').innerText = t.aboutTitle;
     }
 
     async function load() {
