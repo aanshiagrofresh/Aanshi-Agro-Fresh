@@ -12,7 +12,7 @@
             --bg: #f4f7f6;
         }
 
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
 
         /* ল্যাঙ্গুয়েজ সুইচ বাটন */
         .lang-switch { position: absolute; top: 15px; right: 15px; z-index: 2000; }
@@ -25,22 +25,20 @@
             color: white; text-align: center; padding: 20px;
         }
 
-        /* --- উজ্জ্বল এবং বড় লোগো --- */
+        /* লোগো সেকশন ফিক্স */
         .brand-logo {
-            width: 130px; height: 130px; /* লোগো বড় করা হয়েছে */
+            width: 110px; height: 110px;
             background: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 15px; border: 5px solid var(--accent);
-            overflow: hidden; 
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4); /* শ্যাডো দিয়ে উজ্জ্বল করা হয়েছে */
-            filter: brightness(1.1); /* লোগোর উজ্জ্বলতা বাড়ানো হয়েছে */
+            margin-bottom: 10px; border: 4px solid var(--accent);
+            overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
 
         .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; }
         .search-box { width: 90%; max-width: 500px; padding: 12px 20px; border-radius: 30px; border: none; display: block; margin: auto; outline: none; font-size: 16px; }
 
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 10px; flex: 1; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 10px; }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; } /* মোবাইল গ্রিড ২ কলাম */
 
         @media (min-width: 768px) {
@@ -74,25 +72,25 @@
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; outline-color: var(--primary); }
         .btn-order { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        /* --- Footer (About Us) Section - Enhanced Clarity & Colors --- */
+        /* --- এখানে ব্যাকগ্রাউন্ড ফিক্স করা হয়েছে --- */
         .footer { 
-            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.85)), 
-                        url('https://images.unsplash.com/photo-1490818383969-51fed075d92e?auto=format&fit=crop&w=1000&q=80');
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)), 
+                        url('https://cdn.pixabay.com/photo/2017/10/09/19/29/eat-2834549_1280.jpg');
             background-size: cover; 
             background-position: center;
             background-repeat: no-repeat;
             color: #1a1a1a; 
-            padding: 30px 20px; 
+            padding: 25px 20px; 
             text-align: center; 
-            margin-top: auto; /* ফুটারকে নিচে নামিয়ে রাখার জন্য */
-            border-top: 4px solid var(--primary);
+            margin-top: 50px; 
+            border-top: 2px solid #2e7d32;
         }
-        .footer h3 { color: var(--primary); margin: 0 0 12px 0; font-size: 26px; font-weight: 800; text-transform: uppercase; text-shadow: 1px 1px 0px white; }
-        .footer p { margin: 6px 0; font-size: 15px; color: #000; line-height: 1.5; font-weight: 700; text-shadow: 0.5px 0.5px 0px white; }
-        .footer-brand { color: #000; font-size: 20px; font-weight: 900; display: block; margin-bottom: 10px; }
+        .footer h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 22px; font-weight: bold; }
+        .footer p { margin: 4px 0; font-size: 14px; color: #000; line-height: 1.5; font-weight: 700; }
+        .footer-brand { color: #000; font-size: 18px; font-weight: 800; display: block; margin-bottom: 6px; }
         
-        .whatsapp-btn { display: inline-flex; align-items: center; background: #25D366; color: white; padding: 12px 25px; border-radius: 40px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-size: 16px; border: 2px solid white; }
-        .whatsapp-btn img { width: 22px; margin-right: 10px; }
+        .whatsapp-btn { display: inline-flex; align-items: center; background: #25D366; color: white; padding: 10px 22px; border-radius: 35px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-size: 15px; }
+        .whatsapp-btn img { width: 20px; margin-right: 10px; }
 
         @media (max-width: 768px) {
             .cart-panel { width: 100%; right: -100%; }
