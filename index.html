@@ -14,7 +14,6 @@
 
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
 
-        /* ল্যাঙ্গুয়েজ সুইচ বাটন */
         .lang-switch { position: absolute; top: 15px; right: 15px; z-index: 2000; }
         .lang-btn { background: white; border: 2px solid var(--primary); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
@@ -25,7 +24,6 @@
             color: white; text-align: center; padding: 20px;
         }
 
-        /* লোগো সেকশন ফিক্স */
         .brand-logo {
             width: 110px; height: 110px;
             background: white; border-radius: 50%;
@@ -153,7 +151,8 @@
 </div>
 
 <script>
-    const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
+    // এখানে আপনার নতুন Deployment URL টি বসান
+    const API = "এখানে_আপনার_নতুন_স্ক্রিপ্ট_লিঙ্ক_দিন"; 
     let inventory = [];
     let cart = {};
     let currentLang = 'bn';
@@ -191,7 +190,6 @@
         try {
             const r = await fetch(API);
             const data = await r.json();
-            // ডাটা লোড করার সময় আইডি যোগ করা
             inventory = data.map((item, index) => ({ ...item, id: item.id || `prod_${index}` }));
             document.getElementById('loader').style.display = 'none';
             render();
@@ -200,8 +198,8 @@
 
     function render(data = inventory) {
         let h = '';
-        // ফিল্টার লজিক: যদি status কলামে 'Hide' থাকে তবে সেটি দেখাবে না
-        const visibleData = data.filter(p => !p.status || p.status.toLowerCase() !== 'hide');
+        // Status কলামে 'hide' থাকলে ফিল্টার হবে
+        const visibleData = data.filter(p => !p.status || p.status.toString().toLowerCase().trim() !== 'hide');
         
         visibleData.forEach(p => {
             const q = cart[p.id]?.qty || 0;
