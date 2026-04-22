@@ -72,7 +72,7 @@
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; outline-color: var(--primary); }
         .btn-order { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        /* --- এখানে ব্যাকগ্রাউন্ড ফিক্স করা হয়েছে --- */
+        /* --- ফুটার সেকশন --- */
         .footer { 
             background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)), 
                         url('https://cdn.pixabay.com/photo/2017/10/09/19/29/eat-2834549_1280.jpg');
@@ -148,7 +148,7 @@
         <span id="totalLabel">মোট:</span>
         <span id="total-val">₹0</span>
     </div>
-    <button class="btn-order" id="checkout-btn" style="display:none;" onclick="openModal()">Check Out (COD)</button>
+    <button class="btn-order" id="checkout-btn" style="display:none;" onclick="openModal()">Place Order</button>
 </div>
 
 <div id="modal" class="modal">
@@ -169,8 +169,8 @@
     let currentLang = 'bn';
 
     const translations = {
-        en: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "Freshness from field to your door", search: "Search vegetables or fruits...", loading: "Loading Products...", cartHeader: "Your Cart 🛒", emptyCart: "Cart is empty.", total: "Total:", checkout: "Check Out (COD)", modalHeader: "Delivery Details", namePlace: "Your Name", phonePlace: "Mobile Number", addrPlace: "Full Address", confirmBtn: "Confirm Order", cancel: "Cancel", addBtn: "Add to Cart", addMore: "Add More", unitPer: "per", success: "Order Successful!", aboutTitle: "About Us" },
-        bn: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়", search: "সবজি বা ফল খুঁজুন...", loading: "প্রোডাক্ট লোড হচ্ছে...", cartHeader: "আপনার ব্যাগ 🛒", emptyCart: "ব্যাগ খালি।", total: "মোট:", checkout: "Check Out (COD)", modalHeader: "ডেলিভারি তথ্য দিন", namePlace: "আপনার নাম", phonePlace: "মোবাইল নম্বর", addrPlace: "পুরো ঠিকানা", confirmBtn: "অর্ডার কনফার্ম করুন", cancel: "বাতিল করুন", addBtn: "কার্টে যোগ করুন", addMore: "আরো যোগ করুন", unitPer: "প্রতি", success: "অর্ডার সফল হয়েছে!", aboutTitle: "আমাদের সম্পর্কে" }
+        en: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "Freshness from field to your door", search: "Search vegetables or fruits...", loading: "Loading Products...", cartHeader: "Your Cart 🛒", emptyCart: "Cart is empty.", total: "Total:", checkout: "Place Order", modalHeader: "Delivery Details", namePlace: "Your Name", phonePlace: "Mobile Number", addrPlace: "Full Address", confirmBtn: "Confirm Order", cancel: "Cancel", addBtn: "Add to Cart", addMore: "Add More", unitPer: "per", success: "Order Successful!", aboutTitle: "About Us" },
+        bn: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়", search: "সবজি বা ফল খুঁজুন...", loading: "প্রোডাক্ট লোড হচ্ছে...", cartHeader: "আপনার ব্যাগ 🛒", emptyCart: "ব্যাগ খালি।", total: "মোট:", checkout: "অর্ডার প্লেস করুন", modalHeader: "ডেলিভারি তথ্য দিন", namePlace: "আপনার নাম", phonePlace: "মোবাইল নম্বর", addrPlace: "পুরো ঠিকানা", confirmBtn: "অর্ডার কনফার্ম করুন", cancel: "বাতিল করুন", addBtn: "কার্টে যোগ করুন", addMore: "আরো যোগ করুন", unitPer: "প্রতি", success: "অর্ডার সফল হয়েছে!", aboutTitle: "আমাদের সম্পর্কে" }
     };
 
     function toggleLang() {
