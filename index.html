@@ -5,90 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aanshi Agro Fresh - Freshness Delivered</title>
     <style>
-        :root { --primary: #2e7d32; --accent: #ffa41c; --white: #ffffff; --bg: #f4f7f6; }
+        :root {
+            --primary: #2e7d32;
+            --accent: #ffa41c;
+            --white: #ffffff;
+            --bg: #f4f7f6;
+        }
+
         body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: #333; }
+
+        /* ল্যাঙ্গুয়েজ সুইচ বাটন */
         .lang-switch { position: absolute; top: 15px; right: 15px; z-index: 2000; }
         .lang-btn { background: white; border: 2px solid var(--primary); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; height: 35vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 20px; }
-        .brand-logo { width: 110px; height: 110px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border: 4px solid var(--accent); overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center; height: 35vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center; padding: 20px;
+        }
+
+        /* লোগো সেকশন ফিক্স */
+        .brand-logo {
+            width: 110px; height: 110px;
+            background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 10px; border: 4px solid var(--accent);
+            overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
         .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
+
         .nav-sticky { position: sticky; top: 0; background: var(--primary); padding: 12px; z-index: 1000; }
         .search-box { width: 90%; max-width: 500px; padding: 12px 20px; border-radius: 30px; border: none; display: block; margin: auto; outline: none; font-size: 16px; }
+
         .container { max-width: 1200px; margin: 20px auto; padding: 0 10px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); } }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; } /* মোবাইল গ্রিড ২ কলাম */
+
+        @media (min-width: 768px) {
+            .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+        }
+
         .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; padding-bottom: 12px; }
         .card img { width: 100%; height: 140px; object-fit: cover; }
         .card h4 { margin: 10px 5px; font-size: 15px; height: 35px; overflow: hidden; }
+        
         .price-container { margin-bottom: 10px; min-height: 45px; }
         .mrp { color: #999; text-decoration: line-through; font-size: 13px; margin-right: 5px; }
         .sale-price { color: var(--primary); font-weight: bold; font-size: 18px; }
         .unit-text { font-size: 12px; color: #666; display: block; margin-top: 2px; }
+
         .qty-box { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 10px; }
         .qty-btn { background: #f0f0f0; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 18px; }
         .btn-add { background: var(--accent); color: white; border: none; padding: 10px; width: 90%; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-add:active { transform: scale(0.95); }
-        .footer { background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('https://images.unsplash.com/photo-1610832958506-aa5636817671?q=80&w=600&auto=format&fit=crop'); background-size: cover; background-position: center; color: #333; padding: 25px 20px; text-align: center; margin-top: 50px; border-top: 2px solid #2e7d32; }
-        .whatsapp-btn { display: inline-flex; align-items: center; background: #25D366; color: white; padding: 10px 22px; border-radius: 35px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-size: 15px; }
+
         .floating-cart { position: fixed; bottom: 25px; right: 25px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 1500; }
         .cart-badge { position: absolute; top: 0; right: 0; background: #ff3b30; color: white; border-radius: 50%; padding: 4px 9px; font-size: 12px; font-weight: bold; border: 2px solid white; }
+        
         .cart-panel { position: fixed; top: 0; right: -400px; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 25px; box-sizing: border-box; display: flex; flex-direction: column; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
         .cart-panel.active { right: 0; }
         .close-cart { font-size: 30px; cursor: pointer; position: absolute; top: 15px; left: 15px; color: #666; }
         #cart-content { flex: 1; overflow-y: auto; margin-top: 40px; }
+
         .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
         .modal-content { background: white; width: 90%; max-width: 400px; margin: 15% auto; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; outline-color: var(--primary); }
         .btn-order { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        @media (max-width: 768px) { .cart-panel { width: 100%; right: -100%; } }
+
+        /* --- ফুটার সেকশন --- */
+        .footer { 
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)), 
+                        url('https://cdn.pixabay.com/photo/2017/10/09/19/29/eat-2834549_1280.jpg');
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #1a1a1a; 
+            padding: 25px 20px; 
+            text-align: center; 
+            margin-top: 50px; 
+            border-top: 2px solid #2e7d32;
+        }
+        .footer h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 22px; font-weight: bold; }
+        .footer p { margin: 4px 0; font-size: 14px; color: #000; line-height: 1.5; font-weight: 700; }
+        .footer-brand { color: #000; font-size: 18px; font-weight: 800; display: block; margin-bottom: 6px; }
+        
+        .whatsapp-btn { display: inline-flex; align-items: center; background: #25D366; color: white; padding: 10px 22px; border-radius: 35px; text-decoration: none; font-weight: bold; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-size: 15px; }
+        .whatsapp-btn img { width: 20px; margin-right: 10px; }
+
+        @media (max-width: 768px) {
+            .cart-panel { width: 100%; right: -100%; }
+        }
     </style>
 </head>
 <body>
-<div class="lang-switch"><button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button></div>
+
+<div class="lang-switch">
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+</div>
+
 <div class="hero">
-    <div class="brand-logo"><img src="logo.jpg.jpeg" alt="Logo" onerror="this.src='https://raw.githubusercontent.com/aanshiagrofresh/Aanshi-Agro-Fresh/main/logo.jpg.jpeg'"></div>
+    <div class="brand-logo">
+        <img src="logo.jpg.jpeg" id="mainLogo" alt="Aanshi Agro Logo" onerror="this.src='https://raw.githubusercontent.com/aanshiagrofresh/Aanshi-Agro-Fresh/main/logo.jpg.jpeg'">
+    </div>
     <h1 id="heroTitle">Aanshi Agro Fresh 🥬</h1>
     <p id="heroSubtitle">চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়</p>
 </div>
-<div class="nav-sticky"><input type="text" class="search-box" id="search" placeholder="সবজি বা ফল খুঁজুন..." onkeyup="search()"></div>
+
+<div class="nav-sticky">
+    <input type="text" class="search-box" id="search" placeholder="সবজি বা ফল খুঁজুন..." onkeyup="search()">
+</div>
+
 <div class="container">
     <div id="loader" style="text-align:center; font-weight:bold; margin-top: 50px;">প্রোডাক্ট লোড হচ্ছে...</div>
     <div class="grid" id="product-display"></div>
 </div>
+
 <div class="footer">
     <h3 id="aboutHeader">আমাদের সম্পর্কে</h3>
-    <span style="font-weight:bold; font-size:18px;">Aanshi Agro Fresh</span>
+    <span class="footer-brand">Aanshi Agro Fresh</span>
     <p>Chandpara, North 24 Parganas, West Bengal</p>
     <p>Mob no: +91 8910083889</p>
     <p>Mail id: aanshiagrofresh@gmail.com</p>
-    <a href="https://wa.me/918910083889" class="whatsapp-btn" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WA" width="20" style="margin-right:10px;"> WhatsApp Now</a>
+    
+    <a href="https://wa.me/918910083889" class="whatsapp-btn" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WA">
+        WhatsApp Now
+    </a>
 </div>
-<div class="floating-cart" onclick="toggleCart()"><span style="font-size: 30px;">🛒</span><div class="cart-badge" id="badge">0</div></div>
+
+<div class="floating-cart" onclick="toggleCart()">
+    <span style="font-size: 30px;">🛒</span>
+    <div class="cart-badge" id="badge">0</div>
+</div>
+
 <div class="cart-panel" id="cartPanel">
     <span class="close-cart" onclick="toggleCart()">&times;</span>
     <h2 id="cartHeader" style="text-align: center; margin-bottom: 20px;">আপনার ব্যাগ 🛒</h2>
+    <hr>
     <div id="cart-content">ব্যাগ খালি।</div>
+    <hr>
     <div style="display:flex; justify-content:space-between; font-weight:bold; font-size: 20px; padding: 15px 0;">
-        <span id="totalLabel">মোট:</span><span id="total-val">₹0</span>
+        <span id="totalLabel">মোট:</span>
+        <span id="total-val">₹0</span>
     </div>
     <button class="btn-order" id="checkout-btn" style="display:none;" onclick="openModal()">Place Order</button>
 </div>
-<div id="modal" class="modal"><div class="modal-content"><h3 id="modalHeader">ডেলিভারি তথ্য দিন</h3><input type="text" id="name" placeholder="আপনার নাম"><input type="tel" id="phone" placeholder="মোবাইল নম্বর"><textarea id="addr" placeholder="পুরো ঠিকানা" rows="3"></textarea><button class="btn-order" id="finalOrderBtn" onclick="submitOrder()">অর্ডার কনফার্ম করুন</button><p onclick="closeModal()" style="color:red; cursor:pointer; margin-top:15px; font-weight: bold;" id="cancelLabel">বাতিল করুন</p></div></div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalHeader" style="color: var(--primary);">ডেলিভারি তথ্য দিন</h3>
+        <input type="text" id="name" placeholder="আপনার নাম">
+        <input type="tel" id="phone" placeholder="মোবাইল নম্বর">
+        <textarea id="addr" placeholder="পুরো ঠিকানা (পাড়া, ব্লক, পিন কোড)" rows="3"></textarea>
+        <button class="btn-order" id="finalOrderBtn" onclick="submitOrder()">অর্ডার কনফার্ম করুন</button>
+        <p onclick="closeModal()" style="color:red; cursor:pointer; margin-top:15px; font-weight: bold;" id="cancelLabel">বাতিল করুন</p>
+    </div>
+</div>
 
 <script>
-    // আপনার সঠিক লিঙ্কটি এখানে বসিয়ে দেওয়া হয়েছে
-    const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec"; 
-    
-    let inventory = []; let cart = {}; let currentLang = 'bn';
+    const API = "https://script.google.com/macros/s/AKfycbyXgigVxk3dWR0VtISvmPn45Meno71pKcNczHU_HqNl3q3AJE0lxlHb5zNxrD9JyLIgQg/exec";
+    let inventory = [];
+    let cart = {};
+    let currentLang = 'bn';
+
     const translations = {
-        en: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "Freshness from field to your door", search: "Search vegetables or fruits...", loading: "Loading...", cartHeader: "Your Cart 🛒", emptyCart: "Cart is empty.", total: "Total:", checkout: "Place Order", modalHeader: "Delivery Details", namePlace: "Your Name", phonePlace: "Mobile Number", addrPlace: "Full Address", confirmBtn: "Confirm Order", cancel: "Cancel", addBtn: "Add to Cart", addMore: "Add More", unitPer: "per", success: "Order Successful!", aboutTitle: "About Us" },
+        en: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "Freshness from field to your door", search: "Search vegetables or fruits...", loading: "Loading Products...", cartHeader: "Your Cart 🛒", emptyCart: "Cart is empty.", total: "Total:", checkout: "Place Order", modalHeader: "Delivery Details", namePlace: "Your Name", phonePlace: "Mobile Number", addrPlace: "Full Address", confirmBtn: "Confirm Order", cancel: "Cancel", addBtn: "Add to Cart", addMore: "Add More", unitPer: "per", success: "Order Successful!", aboutTitle: "About Us" },
         bn: { heroTitle: "Aanshi Agro Fresh 🥬", heroSubtitle: "চাষির মাঠের সতেজতা, আপনার ঘরের দরজায়", search: "সবজি বা ফল খুঁজুন...", loading: "প্রোডাক্ট লোড হচ্ছে...", cartHeader: "আপনার ব্যাগ 🛒", emptyCart: "ব্যাগ খালি।", total: "মোট:", checkout: "অর্ডার প্লেস করুন", modalHeader: "ডেলিভারি তথ্য দিন", namePlace: "আপনার নাম", phonePlace: "মোবাইল নম্বর", addrPlace: "পুরো ঠিকানা", confirmBtn: "অর্ডার কনফার্ম করুন", cancel: "বাতিল করুন", addBtn: "কার্টে যোগ করুন", addMore: "আরো যোগ করুন", unitPer: "প্রতি", success: "অর্ডার সফল হয়েছে!", aboutTitle: "আমাদের সম্পর্কে" }
     };
 
-    function toggleLang() { currentLang = currentLang === 'bn' ? 'en' : 'bn'; updatePageText(); render(); }
+    function toggleLang() {
+        currentLang = currentLang === 'bn' ? 'en' : 'bn';
+        document.getElementById('langBtn').innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
+        updatePageText();
+        render();
+    }
+
     function updatePageText() {
         const t = translations[currentLang];
-        document.getElementById('langBtn').innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
         document.getElementById('heroTitle').innerText = t.heroTitle;
         document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
         document.getElementById('search').placeholder = t.search;
@@ -108,16 +201,7 @@
         try {
             const r = await fetch(API);
             const data = await r.json();
-            // ডাটা ম্যাপ করা হচ্ছে আপনার শিটের কলামের সাথে মিল রেখে
-            inventory = data.map((p, idx) => ({
-                id: p.id || `prod_${idx}`,
-                name: p.name,
-                unit: p.unit,
-                saleprice: p.price || p.saleprice,
-                mrp: p.mrp,
-                image: p.img || p.image,
-                status: p.status
-            }));
+            inventory = data.map((item, index) => ({ ...item, id: item.id || `prod_${index}` }));
             document.getElementById('loader').style.display = 'none';
             render();
         } catch(e) { document.getElementById('loader').innerText = "Load Failed!"; }
@@ -125,25 +209,30 @@
 
     function render(data = inventory) {
         let h = '';
-        // Status কলামে 'hide' থাকলে ফিল্টার হবে
-        const visibleData = data.filter(p => !p.status || p.status.toString().toLowerCase().trim() !== 'hide');
-        visibleData.forEach((p) => {
-            const id = p.id;
-            const q = cart[id]?.qty || 0;
-            h += `<div class="card">
-                    <img src="${p.image}" onerror="this.src='https://via.placeholder.com/150?text=Fresh+Agro'">
+        data.forEach(p => {
+            const q = cart[p.id]?.qty || 0;
+            let mrpMarkup = "";
+            if(p.mrp && Number(p.mrp) > Number(p.price)) {
+                mrpMarkup = `<span class="mrp">₹${p.mrp}</span>`;
+            }
+
+            h += `
+                <div class="card">
+                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150?text=Fresh+Agro'">
                     <h4>${p.name}</h4>
                     <div class="price-container">
-                        ${p.mrp ? `<span class="mrp">₹${p.mrp}</span>` : ''}
-                        <span class="sale-price">₹${p.saleprice}</span>
+                        ${mrpMarkup}
+                        <span class="sale-price">₹${p.price}</span>
                         <span class="unit-text">${translations[currentLang].unitPer} ${p.unit}</span>
                     </div>
                     <div class="qty-box">
-                        <button class="qty-btn" onclick="updateQty('${id}', -1)">-</button>
-                        <span>${q}</span>
-                        <button class="qty-btn" onclick="updateQty('${id}', 1)">+</button>
+                        <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
+                        <span style="font-weight:bold; min-width:20px;">${q}</span>
+                        <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
                     </div>
-                    <button class="btn-add" onclick="updateQty('${id}', 1)">${q > 0 ? translations[currentLang].addMore : translations[currentLang].addBtn}</button>
+                    <button class="btn-add" onclick="updateQty('${p.id}', 1)">
+                        ${q > 0 ? translations[currentLang].addMore : translations[currentLang].addBtn}
+                    </button>
                 </div>`;
         });
         document.getElementById('product-display').innerHTML = h;
@@ -153,18 +242,24 @@
         if (!cart[id]) {
             const p = inventory.find(x => x.id === id);
             if(!p) return;
-            cart[id] = { name: p.name, price: p.saleprice, unit: p.unit, qty: 0 };
+            cart[id] = { ...p, qty: 0 };
         }
         cart[id].qty += change;
         if (cart[id].qty <= 0) delete cart[id];
-        updateCart(); render();
+        updateCart();
+        render();
     }
 
     function updateCart() {
         let h = ''; let total = 0; let count = 0;
         Object.values(cart).forEach(i => {
-            let s = i.price * i.qty; total += s; count += i.qty;
-            h += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div>${i.name} (${i.qty})</div><div>₹${s}</div></div>`;
+            let s = i.price * i.qty;
+            total += s;
+            count += i.qty;
+            h += `<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:8px;">
+                    <div><b>${i.name}</b><br><small>${i.qty} x ₹${i.price}</small></div>
+                    <b>₹${s}</b>
+                  </div>`;
         });
         document.getElementById('cart-content').innerHTML = h || translations[currentLang].emptyCart;
         document.getElementById('total-val').innerText = "₹" + total;
@@ -173,7 +268,10 @@
     }
 
     function toggleCart() { document.getElementById('cartPanel').classList.toggle('active'); }
-    function search() { let q = document.getElementById('search').value.toLowerCase(); render(inventory.filter(p => p.name.toLowerCase().includes(q))); }
+    function search() {
+        let q = document.getElementById('search').value.toLowerCase();
+        render(inventory.filter(p => p.name.toLowerCase().includes(q)));
+    }
     function openModal() { document.getElementById('modal').style.display = 'block'; }
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
@@ -181,19 +279,17 @@
         const n = document.getElementById('name').value.trim();
         const p = document.getElementById('phone').value.trim();
         const a = document.getElementById('addr').value.trim();
-        if(!n || !p || !a) return alert("সব তথ্য দিন");
-        
-        const order = { 
-            name: n, 
-            phone: p, 
-            address: a, 
-            items: Object.values(cart).map(i => `${i.name} (${i.qty} ${i.unit})`).join(", "), 
-            total: document.getElementById('total-val').innerText 
-        };
+        if(!n || !p || !a) return alert("তথ্য দিন!");
         
         const btn = document.getElementById('finalOrderBtn');
         btn.innerText = "অর্ডার হচ্ছে...";
         btn.disabled = true;
+
+        const order = {
+            name: n, phone: p, address: a,
+            items: Object.values(cart).map(i => `${i.name} (${i.qty} ${i.unit})`).join(", "),
+            total: document.getElementById('total-val').innerText
+        };
 
         try {
             await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify(order) });
@@ -202,6 +298,7 @@
         } catch(e) { alert("Error!"); }
         finally { btn.innerText = translations[currentLang].confirmBtn; btn.disabled = false; }
     }
+
     load();
 </script>
 </body>
